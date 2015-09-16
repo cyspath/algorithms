@@ -1,5 +1,5 @@
 
-# Merge Sort
+# Merge Sort O(nlogn)
 def merge_sort(arr)
   return arr if arr.length <= 1
   left = arr[0...arr.length/2]
@@ -21,7 +21,7 @@ end
 
 # p merge_sort([2, 4, 8, 6, 3, 10, 9, 1, 7, 5])
 
-# Quick Sort
+# Quick Sort O(nlogn)
 
 def quick_sort(arr)
   return arr if arr.length <= 1
@@ -41,3 +41,23 @@ def quick_sort(arr)
 end
 
 # p quick_sort([2, 4, 8, 6, 3, 10, 9, 1, 7, 5])
+
+# bubble Sort O(n^2)
+
+def bubble_sort(arr)
+  while true
+    swapped = false
+    i = 0
+    while i < arr.length - 1
+      if arr[i] > arr[i + 1]
+        arr[i], arr[i + 1] = arr[i + 1], arr[i]
+        swapped = true
+      end
+      i += 1
+    end
+    break if swapped == false
+  end
+  arr
+end
+
+# p bubble_sort([2, 4, 8, 6, 3, 10, 9, 1, 7, 5])
