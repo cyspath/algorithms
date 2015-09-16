@@ -61,3 +61,29 @@ def bubble_sort(arr)
 end
 
 # p bubble_sort([2, 4, 8, 6, 3, 10, 9, 1, 7, 5])
+
+# Counting Sort O(n + k) k is the maximum
+
+def counting_sort(arr, min, max)
+  hash = {}
+  (min..max).to_a.each { |n| hash[n] = 0 }
+  arr.each { |num| hash[num] += 1 }
+  result = []
+  hash.each do |k, v|
+    v.times do
+      result.push(k)
+    end
+  end
+  result
+end
+
+# class Array
+#   def counting_sort #with array instead of hash
+#     min, max = minmax
+#     count = Array.new(max - min + 1, 0)
+#     each {|number| count[number - min] += 1}
+#     (min..max).each_with_object([]) {|i, ary| ary.concat([i] * count[i - min])}
+#   end
+# end
+#
+# p counting_sort([5,4,3,6,7,8,4,6,5], 3, 8)
