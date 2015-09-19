@@ -1,3 +1,30 @@
+
+
+# Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
+#
+# Supposed the linked list is 1 -> 2 -> 3 -> 4 and you are given the third node with value 3, the linked list should become 1 -> 2 -> 4 after calling your function.
+
+def delete_node(node)
+    if node.next != nil
+        node.val = node.next.val
+        node.next = node.next.next
+    end
+end
+
+# Given two strings s and t, write a function to determine if t is an anagram of s.
+#
+# For example,
+# s = "anagram", t = "nagaram", return true.
+# s = "rat", t = "car", return false.
+#
+# Note:
+# You may assume the string contains only lowercase alphabets.
+
+def is_anagram(s, t)
+  s.split('').sort == t.split('').sort
+end
+
+
 # Given a roman numeral, convert it to an integer.
 #
 # Input is guaranteed to be within the range from 1 to 3999.
