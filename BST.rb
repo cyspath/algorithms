@@ -13,12 +13,16 @@ root.left = Node.new(2)
 root.left.left = Node.new(1)
 root.left.right = Node.new(4)
 root.left.right.left = Node.new(3)
+root.left.right.left.left = Node.new(2.5)
+root.left.right.left.left.right = Node.new(3)
+
 
 root.right = Node.new(7)
 root.right.left = Node.new(6)
 root.right.right = Node.new(9)
 root.right.right.left = Node.new(8)
 root.right.right.right = Node.new(10)
+root.right.right.right.right = Node.new(11)
 
 #           5
 #       /       \
@@ -27,7 +31,10 @@ root.right.right.right = Node.new(10)
 # 1       4    6     9
 #       /          /   \
 #     3           8     10
-
+#   /                    \
+# 2.5                     11
+#  \
+#   3
 
 # given a node in BST, find next largest value
 
@@ -64,8 +71,12 @@ def max_depth(root)
 
   if root.left || root.right
     depth = 1
+  else
+    depth = 0
   end
 
-  return depth + (max_depth(root.left), max_depth(root.right)).max
+  return depth + [max_depth(root.left), max_depth(root.right)].max
 
 end
+
+# p max_depth(root)
