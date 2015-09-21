@@ -1,4 +1,103 @@
+# You are climbing a stair case. It takes n steps to reach to the top.
+#
+# Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 
+ # lets try c(1) = 1, c(2) = 2, c(3) = 3, c(4) = 5, c(5) = 11111, 2111, 1211, 1121, 1112, 221, 212, 122 = 8... fib!
+def climb_stairs(n)
+  return 1 if n == 1
+  return 2 if n == 2
+  climb_stairs(n - 1) + climb_stairs(n - 2)
+end
+
+# p climb_stairs(6)
+
+# Implement the following operations of a queue using stacks.
+#
+# push(x) -- Push element x to the back of queue.
+# pop() -- Removes the element from in front of queue.
+# peek() -- Get the front element.
+# empty() -- Return whether the queue is empty.
+
+class Queue
+    # Initialize your data structure here.
+    def initialize
+        @stack = []
+    end
+
+    # @param {Integer} x
+    # @return {void}
+    def push(x)
+        @stack.push(x)
+    end
+
+    # @return {void}
+    def pop
+        @stack.shift
+    end
+
+    # @return {Integer}
+    def peek
+        @stack[0]
+    end
+
+    # @return {Boolean}
+    def empty
+        @stack.length == 0
+    end
+end
+
+# Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.
+#
+# You may assume that the array is non-empty and the majority element always exist in the array.
+
+def majority_element(nums)
+    hash = {}
+    nums.each do |n|
+        if !hash[n]
+            hash[n] = 1
+        else
+            hash[n] += 1
+        end
+    end
+    hash.select { |k, v| v > (nums.length / 2) }.keys[0]
+end
+
+# Given a column title as appear in an Excel sheet, return its corresponding column number.
+#
+# For example:
+#
+#     A -> 1
+#     B -> 2
+#     C -> 3
+#     ...
+#     Z -> 26
+#     AA -> 27
+#     AB -> 28
+
+
+def title_to_number(s)
+    dic = {}
+    n = 1
+    ('A'..'Z').to_a.each do |letter|
+        dic[letter] = n
+        n += 1
+    end
+    # AA = (1*26^1) + (1*26^0)
+    # BCD = (2*26^2) + (3*26^1) + (4*26^0)
+
+    s = s.reverse
+    i = 0
+    sum = 0
+    while i < s.length
+        multiplier = 1
+        i.times { multiplier *= 26 }
+
+        sum += dic[s[i]] * multiplier
+        i += 1
+    end
+    sum
+
+end
 
 # Given an array of integers, find if the array contains any duplicates. Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct.
 
@@ -50,36 +149,6 @@ def hamming_weight(n)
     a.count(1)
 end
 
-# def hamming_weight(n)
-    a = []
-    i = 1
-    while i <= n
-        if a.empty?
-            a.push(1)
-        elsif a.count(0) == 0
-            a.map! { |n| n = 0 }
-            a.unshift(1)
-        else
-            idx = a.length - 1
-            while idx >= 0
-                if a[idx] == 1
-                    a[idx] = 0
-                    idx -= 1
-                    next
-                end
-
-                if a[idx] == 0
-                    a[idx] = 1
-                    break
-                end
-            end
-        end
-
-        i += 1
-    end
-    a.count(1)
-
-end
 
 # Invert a binary tree.
 #
