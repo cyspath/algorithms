@@ -3,11 +3,16 @@
 # Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 
  # lets try c(1) = 1, c(2) = 2, c(3) = 3, c(4) = 5, c(5) = 11111, 2111, 1211, 1121, 1112, 221, 212, 122 = 8... fib!
-def climb_stairs(n)
-  return 1 if n == 1
-  return 2 if n == 2
-  climb_stairs(n - 1) + climb_stairs(n - 2)
-end
+ def climb_stairs(n)
+     climb_helper(n).last
+ end
+
+ def climb_helper(n)
+   return [1] if n == 1
+   return [1,2] if n == 2
+   result = helper(n - 1)
+   result.<<(result[-1] + result[-2])
+ end
 
 # p climb_stairs(6)
 
