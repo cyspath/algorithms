@@ -29,7 +29,30 @@ def binary_string(n)
     arr.unshift(n % 2)
     n /= 2
   end
-  arr
+  num_zero = 32 - arr.length
+  num_zero.times { arr.unshift(0) }
+  arr.join()
 end
 
-binary_string(8)
+# p binary_string(8)
+
+# converts from string representation of number (4) into binary
+
+def binary_to_int(str)
+  arr = str.split('')
+  sum = 0
+
+  i = arr.length - 1
+  expn = 0
+  while i >= 0
+    if arr[i] == '1'
+      sum += (2**expn)
+    end
+    expn += 1
+    i -= 1
+  end
+  sum
+
+end
+
+# p binary_to_int("0000000000111")
