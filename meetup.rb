@@ -1,5 +1,43 @@
 require 'byebug'
 
+def frog_cross_river(d,leap,arr)
+  river = Array.new(d+1, '~')
+  location = 0
+
+  arr.each_with_index do |pos, index|
+    river[pos] = '$'
+
+    i = 1
+    while i <= leap
+      if river[location + i] == "$"
+        location = location + i
+        return index if location + leap >= d
+        i = 0
+      end
+      i += 1
+    end
+
+   end
+   return false
+end
+
+p frog_cross_river(10, 3, [6, 2, 1, 1, 3, 6, 8, 4, 1, 5, 9]) #6
+p frog_cross_river(7, 3, [1, 3, 2, 4, 1, 1, 5, 9]) #3
+
+
+def uniq_common_num (a1, a2)
+  hash = {}
+  a1.each do |el|
+    hash[el] = 0
+  end
+  a2.each do |el|
+    hash[el] += 1 if hash[el]
+  end
+  return hash.select {|k, v| v > 0}.keys
+end
+
+# p uniq_common_num([1,2,4,4,1], [1,4,1,1])
+
 # flatten array
 
 def flatten(arr)

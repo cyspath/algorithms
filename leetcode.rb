@@ -1,3 +1,40 @@
+# Given an array of integers, find two numbers such that they add up to a specific target number.
+#
+# The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
+#
+# You may assume that each input would have exactly one solution.
+#
+# Input: numbers={2, 7, 11, 15}, target=9
+# Output: index1=1, index2=2
+
+def two_sum(nums, target)
+  h_table = {}
+  nums.each_with_index do |el, idx|
+    if h_table[target - el]
+      return [h_table[target - el], idx + 1]
+    end
+    h_table[el] = idx + 1
+  end
+  return false
+end
+
+
+# not good enough time complexity
+# def two_sum(nums, target)
+#   i = 0
+#   while i < nums.length - 1
+#     j = i + 1
+#     while j < nums.length
+#       if nums[i] + nums[j] == target
+#         return [i + 1, j + 1]
+#       end
+#       j += 1
+#     end
+#     i+=1
+#   end
+#   return false
+# end
+
 # You are climbing a stair case. It takes n steps to reach to the top.
 #
 # Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
