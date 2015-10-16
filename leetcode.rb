@@ -87,7 +87,7 @@ def convert(str)
   result
 end
 
-# p calculate('(12+(4+523+2)-3)+(63+8)')
+p calculate('(12+(4+523+2)-3)+(63+8)')
 p calculate('0')
 
 
