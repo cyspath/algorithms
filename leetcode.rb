@@ -1,3 +1,97 @@
+# Implement a basic calculator to evaluate a simple expression string.
+#
+# The expression string may contain open ( and closing parentheses ), the plus + or minus sign -, non-negative integers and empty spaces .
+#
+# You may assume that the given expression is always valid.
+#
+# Some examples:
+# "1 + 1" = 2
+# " 2-1 + 2 " = 3
+# "(1+(4+5+2)-3)+(6+8)" = 23
+# Note: Do not use the eval built-in library function.
+
+def calculate(s)
+  arr = convert(s)
+  while true
+
+    s = nil
+    e = nil
+    i = 0
+    while i < arr.length
+      if arr[i] == '('
+        s = i
+      end
+      if arr[i] == ')'
+        e = i
+        break
+      end
+      i += 1
+    end
+
+    if !s.nil? && !e.nil?
+      result = evaluate(arr[s..e])
+      arr = arr.take(s) + result + arr.drop(e+1)
+    else
+      return evaluate(arr)[0]
+    end
+
+    # p arr
+    # sleep 1
+
+
+    break if arr.length <= 1
+  end
+
+end
+
+def evaluate(arr)
+  ops = ['(', ')', '+', '-']
+  if (arr[0] == '(')
+    arr.pop
+    arr.shift
+  end
+  while arr.length > 1
+    result = arr[0].send(arr[1].to_sym, arr[2])
+    arr[0] = result
+    arr.delete_at(1)
+    arr.delete_at(1)
+  end
+  return arr
+end
+
+def convert(str)
+  str = str.delete(" ")
+  nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+  ops = ['(', ')', '+', '-']
+  result = []
+  frag = ''
+  i = 0
+  while i < str.length
+    if ops.include?(str[i])
+      if frag != ''
+        result.push(frag.to_i)
+        frag = ''
+      end
+      result.push(str[i])
+    end
+
+    if nums.include?(str[i])
+      frag += str[i]
+    end
+    i += 1
+  end
+
+  result.push(frag.to_i) if frag != ''
+
+  # p result
+  result
+end
+
+# p calculate('(12+(4+523+2)-3)+(63+8)')
+p calculate('0')
+
+
+
 # Given an array of integers, find two numbers such that they add up to a specific target number.
 #
 # The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
