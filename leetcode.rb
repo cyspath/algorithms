@@ -5,15 +5,8 @@
 
 def single_number(nums)
   hash = {}
-  sum = 0
-  nums.each do |n|
-    sum -= n if hash[n]
-    if !hash[n]
-      sum += n
-      hash[n] = true
-    end
-  end
-  sum
+  nums.each { |n| hash[n] ? hash[n] += 1 : hash[n] = 0 }
+  hash.select { |k,v| v == 0}.keys[0]
 end
 
 # You are playing the following Nim Game with your friend: There is a heap of stones on the table, each time one of you take turns to remove 1 to 3 stones. The one who removes the last stone will be the winner. You will take the first turn to remove the stones.

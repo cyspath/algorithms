@@ -1,5 +1,49 @@
 require 'byebug'
 
+# O(n) soln for celebrity in party, given as a 2D array
+def celebrity_in_party(arr)
+
+  i = 0
+  while i < arr.length
+    j = i
+    while j < arr.length
+      return j if j >= arr.length
+      # next if j == i
+      if arr[i][j] == true
+        i += 1
+        break
+      end
+      j += 1
+    end
+    i += 1
+  end
+
+  p 'celebrity is:'
+  return i
+
+end
+
+arr1 = [ [true, true, true, true],
+        [true, true, true, true],
+        [true, true, true, true],
+        [false, false, false, true]]
+
+        arr2 = [ [true, false, false, true],
+                [false, true, false, true],
+                [false, false, true, true],
+                [false, false, false, true]]
+
+                arr3 = [ [true, true, false, false],
+                        [false, true, false, false],
+                        [false, true, true, false],
+                        [false, true, false, true]]
+
+p celebrity_in_party(arr1)
+p celebrity_in_party(arr2)
+p celebrity_in_party(arr3)
+
+
+
 def single_unicode(n)
   "█▉▊▋▓▩▦▤▧▨◉▣◈▒░$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. "[n]
 end
