@@ -1,26 +1,16 @@
 require 'byebug'
 
-# O(n) soln for celebrity in party, given as a 2D array
+# O(n) soln for celebrity in party, given as a 2D array - as people who knew each other
 def celebrity_in_party(arr)
-
-  i = 0
-  while i < arr.length
-    j = i
-    while j < arr.length
-      return j if j >= arr.length
-      # next if j == i
-      if arr[i][j] == true
-        i += 1
-        break
-      end
-      j += 1
+  row = 0
+  el = 1
+  while el < arr.length
+    if arr[row][el] == true
+      row = el
     end
-    i += 1
+    el += 1
   end
-
-  p 'celebrity is:'
-  return i
-
+  return 'celebrity is: ' + row.to_s
 end
 
 arr1 = [ [true, true, true, true],
@@ -30,7 +20,7 @@ arr1 = [ [true, true, true, true],
 
         arr2 = [ [true, false, false, true],
                 [false, true, false, true],
-                [false, false, true, true],
+                [true, false, true, true],
                 [false, false, false, true]]
 
                 arr3 = [ [true, true, false, false],
@@ -38,9 +28,21 @@ arr1 = [ [true, true, true, true],
                         [false, true, true, false],
                         [false, true, false, true]]
 
-p celebrity_in_party(arr1)
-p celebrity_in_party(arr2)
-p celebrity_in_party(arr3)
+                        arr4 = [ [true, true, true, false],
+                                [false, true, true, false],
+                                [false, false, true, false],
+                                [false, true, true, true]]
+
+                                arr5 = [ [true, false, false, false],
+                                        [true, true, true, false],
+                                        [true, false, true, false],
+                                        [true, true, true, true]]
+
+# p celebrity_in_party(arr1) # 3
+# p celebrity_in_party(arr2) # 3
+# p celebrity_in_party(arr3) # 1
+# p celebrity_in_party(arr4) # 2
+# p celebrity_in_party(arr5) # 0
 
 
 
@@ -70,8 +72,8 @@ def frog_cross_river(d,leap,arr)
    return false
 end
 
-p frog_cross_river(10, 3, [6, 2, 1, 1, 3, 6, 8, 4, 1, 5, 9]) #6
-p frog_cross_river(7, 3, [1, 3, 2, 4, 1, 1, 5, 9]) #3
+# p frog_cross_river(10, 3, [6, 2, 1, 1, 3, 6, 8, 4, 1, 5, 9]) #6
+# p frog_cross_river(7, 3, [1, 3, 2, 4, 1, 1, 5, 9]) #3
 
 
 def uniq_common_num (a1, a2)
