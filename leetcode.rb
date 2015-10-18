@@ -1,3 +1,21 @@
+# Given an array of integers, every element appears twice except for one. Find that single one.
+#
+# Note:
+# Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+def single_number(nums)
+  hash = {}
+  sum = 0
+  nums.each do |n|
+    sum -= n if hash[n]
+    if !hash[n]
+      sum += n
+      hash[n] = true
+    end
+  end
+  sum
+end
+
 # You are playing the following Nim Game with your friend: There is a heap of stones on the table, each time one of you take turns to remove 1 to 3 stones. The one who removes the last stone will be the winner. You will take the first turn to remove the stones.
 #
 # Both of you are very clever and have optimal strategies for the game. Write a function to determine whether you can win the game given the number of stones in the heap.
@@ -6,9 +24,8 @@
 
 
 def can_win_nim(n)
-  return true if n <= 3
-  
-
+  return false if n % 4 == 0
+  true
 end
 
 
