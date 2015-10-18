@@ -1,5 +1,10 @@
 require 'byebug'
 
+def single_unicode(n)
+  "█▉▊▋▓▩▦▤▧▨◉▣◈▒░$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. "[n]
+end
+
+
 def frog_cross_river(d,leap,arr)
   river = Array.new(d+1, '~')
   location = 0

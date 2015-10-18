@@ -1,3 +1,107 @@
+# You are playing the following Nim Game with your friend: There is a heap of stones on the table, each time one of you take turns to remove 1 to 3 stones. The one who removes the last stone will be the winner. You will take the first turn to remove the stones.
+#
+# Both of you are very clever and have optimal strategies for the game. Write a function to determine whether you can win the game given the number of stones in the heap.
+#
+# For example, if there are 4 stones in the heap, then you will never win the game: no matter 1, 2, or 3 stones you remove, the last stone will always be removed by your friend.
+
+def can_win_nim(n)
+
+end
+
+
+# Validate if a given string is numeric.
+#
+# Some examples:
+# "0" => true
+# " 0.1 " => true
+# "abc" => false
+# "1 a" => false
+# "2e10" => true
+# Note: It is intended for the problem statement to be ambiguous. You should gather all requirements up front before implementing one.
+
+
+def is_number(s)
+  s = s.split("")
+
+  # getting rid of leading zeros
+  while true
+    break if s[0] != " "
+    s.shift
+  end
+
+  # getting rid of ending zeros
+  while true
+    break if s[-1] != " "
+    s.pop
+  end
+
+  if s.length == 0
+    return false
+  end
+
+  if s.length == 1 && s[0] == '.'
+    return false
+  end
+
+  if s[-1] == 'e' || s[-1] == 'E'
+    return false
+  end
+
+  if s[0] == '+' ||  s[0] == '-'
+    return false if s[1] == '.' || s[1] == 'e' || s[1] == 'E'
+  end
+
+  nums = {}
+  ('0'..'9').to_a.each { |num| nums[num] = true }
+
+  # making dictionaries of things that should not be in the number
+  non_num = {}
+  specials = "?<>',[]}{=)(*&^%$#`~{}@!/\\".split('')
+  arr = ('a'..'z').to_a + ('A'..'Z').to_a + specials
+  arr.delete('e')
+  arr.delete('E')
+  arr.each {|el| non_num[el] = true }
+
+  e_mark = nil
+  period_mark = nil
+
+  s.each_with_index do |n, idx|
+    return false if n == " "
+    return false if n == '-' && idx != 0
+    return false if n == '+' && idx != 0
+
+    s[idx] = 'e' if n == 'E'
+
+
+    if non_num[n]
+      return false
+    end
+
+    if idx == 0 && n == 'e'
+      return false
+    end
+
+    if n == 'e'
+      return false if e_mark == n
+      e_mark = n
+    elsif n == '.'
+      return false if period_mark == n
+      period_mark = n
+    end
+
+    if s[idx - 1] == 'e'
+      return false if n == '.'
+    elsif s[idx - 1] == '.'
+      return false if n == 'e'
+    end
+
+  end
+
+  return true
+end
+
+p is_number(" -.")
+
 # Implement a basic calculator to evaluate a simple expression string.
 #
 # The expression string may contain open ( and closing parentheses ), the plus + or minus sign -, non-negative integers and empty spaces .
