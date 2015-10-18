@@ -4,7 +4,10 @@
 #
 # For example, if there are 4 stones in the heap, then you will never win the game: no matter 1, 2, or 3 stones you remove, the last stone will always be removed by your friend.
 
+
 def can_win_nim(n)
+  return true if n <= 3
+  
 
 end
 
