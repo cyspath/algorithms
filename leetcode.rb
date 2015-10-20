@@ -1,13 +1,49 @@
+# Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
+#
+# For example,
+# Given nums = [0, 1, 3] return 2.
+#
+# Note:
+# Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
+
+def missing_number(nums)
+  sum1 = (0..nums.length).to_a.inject(:+)
+  sum2 = 0
+  seen_zero = false
+  nums.each do |n|
+    sum2 += n
+    seen_zero = true if n == 0
+  end
+  sum1 - sum2
+end
+
+
 # Given an array of integers, every element appears twice except for one. Find that single one.
 #
 # Note:
 # Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
 
+# using ^ bitwise operator, O(1) space O(n) time
+# rememeber what AND OR XOR are
+
 def single_number(nums)
-  hash = {}
-  nums.each { |n| hash[n] ? hash[n] += 1 : hash[n] = 0 }
-  hash.select { |k,v| v == 0}.keys[0]
+  n = nums[0]
+  i = 1
+  while i < nums.length
+    n = n ^ nums[i]
+  end
+  n
 end
+
+
+
+# def single_number(nums)
+#   hash = {}
+#   nums.each { |n| hash[n] ? hash[n] += 1 : hash[n] = 0 }
+#   hash.select { |k,v| v == 0}.keys[0]
+# end
+
+
 
 # You are playing the following Nim Game with your friend: There is a heap of stones on the table, each time one of you take turns to remove 1 to 3 stones. The one who removes the last stone will be the winner. You will take the first turn to remove the stones.
 #
@@ -113,7 +149,7 @@ def is_number(s)
   return true
 end
 
-p is_number(" -.")
+# p is_number(" -.")
 
 # Implement a basic calculator to evaluate a simple expression string.
 #
@@ -203,10 +239,10 @@ def convert(str)
   # p result
   result
 end
-
-p calculate('(12+(4+523+2)-3)+(63+8)')
-p calculate('0')
-
+#
+# p calculate('(12+(4+523+2)-3)+(63+8)')
+# p calculate('0')
+#
 
 
 # Given an array of integers, find two numbers such that they add up to a specific target number.
