@@ -15,3 +15,30 @@ def cats_with_hats
 end
 
 p cats_with_hats
+
+
+# MY OLD SOLUTION Feb 23
+################CATS WITH HATS######################
+cats=[*1..100]
+#cats in an array
+i=2
+#first walk, every cat got a hat, we will start at round 2
+
+while i<=100
+
+    selectedcat=[*1..100].select do |x|
+        x%i==0
+    end
+	# selectedcat contains the cats visited during round i
+
+	hatcatvisited = (cats&selectedcat)
+	nohatcatvisited = selectedcat-hatcatvisited
+	cats = (cats) - (hatcatvisited) + (nohatcatvisited)
+    # remove hatcat visited again, add on visited nohatcat
+
+    i+=1
+end
+
+puts "#{cats.sort}"
+# cats => [1,4,9,16,25,36,49,64,81,100]
+########################################################
