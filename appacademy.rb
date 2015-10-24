@@ -44,3 +44,36 @@ puts "#{cats.sort}"
 ########################################################
 
 #STOCK PICKER
+# choose best two days to buy and then sell the stock, to make max profit
+
+def stock_picker(arr)
+  return nil if arr.length < 2
+  min = arr[0]
+  profit = nil
+  buy = nil
+  sell = nil
+  arr.each_with_index do |price, day|
+    if min.nil?
+      min = price
+      buy = day
+      next
+    end
+    if profit.nil?
+      profit = price - min
+      sell = day
+      next
+    end
+    if price < min
+      min = price
+      buy = day
+      next
+    end
+    if price - min > profit
+      profit = price - min
+      sell = day
+    end
+  end
+  [buy, sell]
+end
+
+p stock_picker([5,3,1,4,6,3,7,2,1]) # [2, 6]
