@@ -1,3 +1,5 @@
+require 'byebug'
+
 # Fib
 # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 
@@ -16,7 +18,7 @@ def timer_rec(arg)
   result.to_s + " - recursive solution, took runtime of: " + duration.to_s
 end
 
-p timer_rec(33)
+# p timer_rec(33)
 
 #############################
 # recursive with hash look up
@@ -34,4 +36,45 @@ def timer_rec_hash(arg)
   result.to_s + " - recursive hash look up solution, took runtime of: " + duration.to_s
 end
 
-p timer_rec_hash(33)
+# p timer_rec_hash(33)
+
+# Coin change dp
+def coin_change(coins, total)
+
+  coins = coins.unshift(0)
+
+  # set up table
+  table = Array.new(coins.length) { Array.new(total + 1, 0) }
+  table.each { |row| row[0] = 1 }
+
+  result = 0
+
+  x = 1
+  while x < coins.length
+    break if coins[x] > total
+
+    y = 1
+    while y <= total
+
+      val1 = table[x][y - coins[x]]
+      val2 = table[x - 1][y]
+      table[x][y] = val1 + val2
+      result = table[x][y]
+
+      y += 1
+    end
+    x += 1
+  end
+
+  table.each { |row| p row }
+  return result
+end
+
+puts 'coin_change([1,2,3], 7)'
+puts coin_change([1,2,3], 7)
+puts
+puts 'coin_change([1,5,10,25], 6)'
+puts coin_change([1,5,10,25], 6)
+puts
+puts 'coin_change([1,5,10,25], 25)'
+puts coin_change([1,5,10,25], 25)
