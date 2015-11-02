@@ -1,5 +1,113 @@
 require 'byebug'
 
+# reverse a string by words
+
+def reverse_words(str)
+  i = 0
+  count = 0
+  length = str.length
+  while i <= length
+    if str[-1] != " "
+      str = (str[-1]) + str[0..-2]
+      count += 1
+    else
+      str.insert(count, " ")
+      str = str[0..-2]
+      count = 0
+    end
+    i += 1
+  end
+  str
+end
+
+p reverse_words('cats in hats problem')
+
+
+# return number of zero of n!
+
+# brute force
+def n_zeros(n)
+  result = factorial(n)
+  count = 0
+  while true
+    if result%10 == 0
+      count += 1
+      result = result/10
+    else
+      break
+    end
+  end
+  count
+end
+
+def factorial(n)
+  return 1 if n == 1
+  n * factorial(n - 1)
+end
+#
+# def n_zeros_op(n)
+#   count = 0
+#   i = 0
+#   while i < n
+#     j = i
+#
+#     while true
+#       if j % 5 == 0 && j != 1
+#         count += 1
+#         j = j / 5
+#         p i
+#         p j
+#         sleep 0.5
+#       else
+#         break
+#       end
+#     end
+#
+#     i += 5
+#   end
+#   count
+# end
+#
+# p factorial(50)
+# p n_zeros(50)
+# p n_zeros_op(50)
+
+# can two team line up, height of people designated by number in arr
+# nlogn soln
+def two_teams(arr1, arr2)
+  arr1 = arr1.sort
+  arr2 = arr2.sort
+
+  #check which teams should be in the front/back
+  if arr1[-1] > arr2[-1]
+    front = arr2
+    back = arr1
+  else
+    front = arr1
+    back = arr2
+  end
+
+  while !front.empty? && !back.empty?
+    if front[-1] < back[-1]
+      front.pop
+      back.pop
+    else
+      return false
+    end
+  end
+  true
+end
+
+# o(n)
+# def two_teams(arr1, arr2)
+#
+# end
+
+p two_teams([1,2,3], [2,3,4]) # true
+p two_teams([0,7], [8,1]) # true
+p two_teams([4,3,1], [5,3,0]) # false
+
+
 # O(n) soln for celebrity in party, given as a 2D array - as people who knew each other
 def celebrity_in_party(arr)
   row = 0
