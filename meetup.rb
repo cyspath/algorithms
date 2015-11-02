@@ -2,25 +2,55 @@ require 'byebug'
 
 # reverse a string by words
 
+# def reverse_words(str)
+#   i = 0
+#   count = 0
+#   length = str.length
+#   while i <= length
+#     if str[-1] != " "
+#       str = (str[-1]) + str[0..-2]
+#       count += 1
+#     else
+#       str.insert(count, " ")
+#       str = str[0..-2]
+#       count = 0
+#     end
+#     i += 1
+#   end
+#   str
+# end
+
 def reverse_words(str)
-  i = 0
-  count = 0
-  length = str.length
-  while i <= length
-    if str[-1] != " "
-      str = (str[-1]) + str[0..-2]
-      count += 1
-    else
-      str.insert(count, " ")
-      str = str[0..-2]
-      count = 0
+  # reverse entire string (for example 'cats in hats problem' => "melborp stah ni stac")
+  str = reverse(str)
+
+  # now reverse each word in the reversed string "melborp stah ni stac"
+  idx1 = 0
+  idx2 = idx1
+  while idx2 < str.length
+    # reverse substring(word) if the next element in array is " " or out of bound
+    if str[idx2 + 1] == " " || str[idx2 + 1].nil?
+      str[idx1..idx2] = reverse(str[idx1..idx2])
+      idx2 += 2
+      idx1 = idx2
     end
-    i += 1
+    idx2 += 1
   end
   str
 end
 
+# helper method to reverse a string
+def reverse(string)
+  i = 0
+  while i < string.length/2
+    string[i], string[-(i+1)] = string[-(i+1)], string[i]
+    i += 1
+  end
+  string
+end
+
 p reverse_words('cats in hats problem')
+p reverse_words('parking is easy')
 
 
 # return number of zero of n!
