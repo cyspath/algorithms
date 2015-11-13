@@ -2,6 +2,26 @@
 require 'byebug'
 require 'set'
 
+# hackerRank str compression: 'aaabcc' -> 'a3bc2'
+def  compress( str)
+    result = ""
+    table = {}
+    i = 0
+    while i < str.length
+        table[str[i]] ? table[str[i]] += 1 : table[str[i]] = 1
+        if str[i] != str[i - 1]
+            result += str[i - 1] if table[str[i - 1]]
+            result += table[str[i - 1]].to_s if table[str[i - 1]] && table[str[i - 1]] != 1
+            table[str[i - 1]] = nil
+        end
+        i += 1
+    end
+    result += str[i - 1] if table[str[i - 1]]
+    result += table[str[i - 1]].to_s if table[str[i - 1]] && table[str[i - 1]] != 1
+    result
+end
+
+
 # frog crosses river with leaves problem
 # O(n) result
 def frog_cross_river(d,leap,arr)
