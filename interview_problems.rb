@@ -2,6 +2,22 @@
 require 'byebug'
 require 'set'
 
+# You will be given an array of several arrays that each contain integers and your goal is to write a function that will sum up all the numbers in all the arrays. For example, if the input is [[3, 2], [1], [4, 12]] then your program should output 22 because 3 + 2 + 1 + 4 + 12 = 22.
+# Full stack academy
+
+def sum_arr_nums(arr)
+  sum = 0
+  arr.each do |el|
+    if el.class == Array
+      sum += sum_arr_nums(el)
+    else
+      sum += el
+    end
+  end
+  sum
+end
+
+
 # hackerRank str compression: 'aaabcc' -> 'a3bc2'
 def  compress( str)
     result = ""
