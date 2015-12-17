@@ -2,6 +2,32 @@
 require 'byebug'
 require 'set'
 
+
+# You will be given 2 parameters: a low number, and high number. Your goal is to print all numbers between low and high, and for each of these numbers print whether or not the number is divisible by 3. If the number is divisible by 3, print the word "div3" directly after the number.
+# Example
+# If the function call is: test_divisors(2, 10) then the output should be:
+# 2
+# 3
+# "div3"
+# 4
+# 5
+# 6
+# "div3"
+# 7
+# 8
+# 9
+# "div3"
+# 10
+
+def test_divisors(x,y)
+  while x <= y
+    puts x
+    puts 'div3' if x % 3 == 0
+    x += 1
+  end
+end
+
+
 # You will be given an array of several arrays that each contain integers and your goal is to write a function that will sum up all the numbers in all the arrays. For example, if the input is [[3, 2], [1], [4, 12]] then your program should output 22 because 3 + 2 + 1 + 4 + 12 = 22.
 # Full stack academy
 
