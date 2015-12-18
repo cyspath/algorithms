@@ -1,6 +1,22 @@
 require 'byebug'
 require 'set'
 
+# This is one type of very common interview question that is usually asked, where your goal is to implement some built-in language function, such as exponentiation, division, hash tables, etc. In this challenge we need to implement exponentiation, or raising a to some power of b which is usually written pow(a, b). In this variation of the challenge, we also need to implement a solution without using the multiplication or division operations, only addition and subtraction are allowed.
+
+# example 3^4 = 3 * 3 * 3 * 3 = (3+3+3) * 3 * 3 = (9+9+9) * 3 = 27+27+27
+
+def exponentiation(a, b)
+  acum = a
+  n = 1
+  while n < b
+    current_sum = 0
+    a.times { current_sum += acum }
+    acum = current_sum
+    n += 1
+  end
+  acum
+end
+
 # Write a function called lucky_sevens which takes an array of integers and returns true if any three consecutive elements sum to 7.
 
 def lucky_sevens(arr)
