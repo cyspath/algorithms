@@ -1,6 +1,17 @@
-
 require 'byebug'
 require 'set'
+
+# Write a function called lucky_sevens which takes an array of integers and returns true if any three consecutive elements sum to 7.
+
+def lucky_sevens(arr)
+  return false if arr.length < 3
+  i = 2
+  while i < arr.length
+    return true if arr[i] + arr[i - 1] + arr[i - 2] == 7
+    i += 1
+  end
+  false
+end
 
 
 # You will be given 2 parameters: a low number, and high number. Your goal is to print all numbers between low and high, and for each of these numbers print whether or not the number is divisible by 3. If the number is divisible by 3, print the word "div3" directly after the number.
