@@ -1,6 +1,47 @@
 require 'byebug'
 require 'set'
 
+# Implement a queue using two stacks, with only push and pop methods
+
+class Queue
+  def initialize
+    @stack1 = []
+    @stack2 = []
+  end
+
+  def stack_check
+    if @stack1.empty?
+      @old_stack = @stack2
+      @new_stack = @stack1
+    else
+      @old_stack = @stack1
+      @new_stack = @stack2
+    end
+  end
+
+  def enqueue(x)
+    stack_check
+
+    while !@old_stack.empty?
+      @new_stack.push(@old_stack.pop)
+    end
+
+    @old_stack.push(x)
+
+    while !@new_stack.empty?
+      @old_stack.push(@new_stack.pop)
+    end
+
+    @old_stack
+  end
+
+  def dequeue
+    @old_stack.pop
+    @old_stack
+  end
+
+end
+
 # This is one type of very common interview question that is usually asked, where your goal is to implement some built-in language function, such as exponentiation, division, hash tables, etc. In this challenge we need to implement exponentiation, or raising a to some power of b which is usually written pow(a, b). In this variation of the challenge, we also need to implement a solution without using the multiplication or division operations, only addition and subtraction are allowed.
 
 # example 3^4 = 3 * 3 * 3 * 3 = (3+3+3) * 3 * 3 = (9+9+9) * 3 = 27+27+27
