@@ -1,8 +1,39 @@
 require 'byebug'
 require 'set'
 
-# Implement a queue using two stacks, with only push and pop methods
+# For this popular algorithm interview question, the input will be a string consisting only of the characters 0, 1 and ?, where the ? acts as a wildcard that can be either a 0 or 1, and your goal is to print all possible combinations of the string. For example, if the string is "011?0" then your program should output a set of all strings, which are: ["01100", "01110"].
 
+# was sort of tough
+
+def wildcard_combo(str)
+  return [str] if !str.include?('?')
+
+  i = 0
+  while i < str.length
+    if str[i] == '?'
+      pos = i
+      break
+    end
+    i += 1
+  end
+
+  pre = pos - 1 <= 0 ? "" : str[0..(pos - 1)]
+  post = wildcard_combo(str[pos + 1..-1])
+
+p pre
+p post
+  result = []
+  post.each do |el|
+    result.push(pre + "1" + el)
+    result.push(pre + "0" + el)
+  end
+  result
+
+end
+# p wildcard_combo("?00?00?")
+
+
+# Implement a queue using two stacks, with only push and pop methods
 class Queue
   def initialize
     @stack1 = []
