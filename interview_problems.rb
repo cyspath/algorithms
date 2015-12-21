@@ -20,8 +20,6 @@ def wildcard_combo(str)
   pre = pos - 1 <= 0 ? "" : str[0..(pos - 1)]
   post = wildcard_combo(str[pos + 1..-1])
 
-p pre
-p post
   result = []
   post.each do |el|
     result.push(pre + "1" + el)
