@@ -3,8 +3,6 @@ require 'set'
 
 # For this popular algorithm interview question, the input will be a string consisting only of the characters 0, 1 and ?, where the ? acts as a wildcard that can be either a 0 or 1, and your goal is to print all possible combinations of the string. For example, if the string is "011?0" then your program should output a set of all strings, which are: ["01100", "01110"].
 
-# was sort of tough
-
 def wildcard_combo(str)
   return [str] if !str.include?('?')
 
