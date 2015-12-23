@@ -1,6 +1,30 @@
 require 'byebug'
 require 'set'
 
+# This is a common interview question where you need to write a program to find all duplicates in an array where the numbers in the array are in the range of 0 to n-1 where n is the size of the array. For example: [1, 2, 3, 3] is okay but [1, 2, 6, 3] is not. In this version of the challenge there can be multiple duplicate numbers as well.
+#
+# The algorithm below is commented to explain what each piece of code does, but the general algorithm is:
+#
+# (1) Loop through the array
+# (2) For each element, find array[absolute(array[i])] in the array and set its value to negative if positive
+# (3) If in step 2 you encounter a negative number, then it means the element at index i in the array is a duplicate
+
+def duplicate_in_array(arr)
+  arr.each do |num|
+    return false if num < 0 || num >= arr.length
+  end
+
+  hash = {}
+  arr.each do |num|
+    if hash[num]
+      hash[num] += 1
+    else
+      hash[num] = 1
+    end
+  end
+  hash.select { |k,v| v > 1}.keys
+end
+
 # For this popular algorithm interview question, the input will be a string consisting only of the characters 0, 1 and ?, where the ? acts as a wildcard that can be either a 0 or 1, and your goal is to print all possible combinations of the string. For example, if the string is "011?0" then your program should output a set of all strings, which are: ["01100", "01110"].
 
 def wildcard_combo(str)
