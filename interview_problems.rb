@@ -1,17 +1,13 @@
 require 'byebug'
 require 'set'
 
-
 # The is a clever interview question that asks you to calculate the cube root of a number quickly. We can solve this by some mathematical tricks that won't require any calculates to take place, only table lookups. This algorithm will focus on calculating the cube root of 6 digit numbers (or less). For example, if the input is 636056 then your program should output 86.
 
 def cube_root(n)
   table = {}
   (1..99).to_a.each { |num| table[(num * num * num)] = num }
-  table[n] ? table[n] : 'invalid input - must be less than 7 digits long'
+  table[n] ? table[n] : 'invalid input - must be less than 7 digits longs'
 end
-
-# p cube_root(636056)
-
 
 # This is a common interview question where you need to write a program to find all duplicates in an array where the numbers in the array are in the range of 0 to n-1 where n is the size of the array. For example: [1, 2, 3, 3] is okay but [1, 2, 6, 3] is not. In this version of the challenge there can be multiple duplicate numbers as well.
 #
