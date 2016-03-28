@@ -76,3 +76,20 @@ def print_file_system(node, str)
 end
 
 ###########################################
+Full Stack Software Engineer · Guardant Health Inc. · Redwood City, CA 10-19-2015 - now, 105k
+
+App Academy, San Francisco, CA june 22 - sep 11 2015, no cert
+
+Clinical Manufacturing Associate · StemCells Inc. · Sunnyvale, CA.  sep 14 2014 - june 19 2015, $47k
+
+
+Part-time volunteer shift team Leader, Patient Service & Emergency Department at Kaiser Hospital, San Jose, CA.	(May 13 - sep 2014)(volunteer)
+
+Quality Control​∙ E​lim Biopharmaceuticals, Inc.​∙ H​ayward, CA. Jun 2011 ­ Feb 2013
+
+Paid medical intern, Good Samaritan Medical Group - ophthalmology clinic, San Jose, CA.				(Oct 10 - May 11)
+
+Math and science instructor, Eye Level Learning, Pleasanton, CA.  (Jan 10 - Sep10)
+
+University of California, Berkeley
+BA Integrative Biology 2006 - 2010
