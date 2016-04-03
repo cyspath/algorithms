@@ -61,6 +61,36 @@ end
 # Now, assume some of the entries in the matrix are blocked, find the number of such paths. For example: For a 3X3 matrix, total number of paths in first case is 6!/3!3! = 20.
 # For second case, if we block entry (2,2), we have only 2 paths available.
 
+# 1  1  1  1
+# 1  2  3  4
+# 1  3  6  10
+# 1  4  10 20
+
+# 4x4
+
+def topleft_to_botright_path(m)
+  i = 0
+  while i < m.length
+    j = 0
+    while j < m[i].length
+      if i == 0 || j == 0
+        m[i][j] = 1
+      else
+        m[i][j] = m[i][j - 1] + m[i - 1][j]
+      end
+      j += 1
+    end
+    i += 1
+  end
+  # return last index
+  m[i - 1][j - 1]
+end
+
+# p topleft_to_botright_path([[0,0,0],[0,0,0],[0,0,0]]) #6
+# p topleft_to_botright_path([[0,0,0,0],[0,0,0,0],[0,0,0,0], [0,0,0,0]]) #20
+
+
+
 ##############################################
 ##############################################
 ##############################################
