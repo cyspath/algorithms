@@ -150,7 +150,42 @@ end
 # p coin_change(6, [1,3,5]) #4 ways
 
 
-##############################################
+##################### LEAST COIN CHANGE PROBLEM #########################
+
+#   0 1 2 3 4 5 6 7 8 9 10
+# 1 0 1 2 3 4 5 6 7 8 9 10
+# 2 0 1 1 2 2 3 3 4 4 8 9
+# 5 0 1 1 2 2 1 2 2 3 3 2
+
+def least_coin_change(n, coins)
+  arr = Array.new(coins.length) { Array.new(n + 2) }
+
+  i = 0
+  while i < arr.length
+    j = 0
+    while j < arr[i].length
+
+      if j == 0
+        arr[i][j] = coins[i]
+      elsif i == 0
+        arr[i][j] = j - 1
+      elsif arr[0][j] >= arr[i][0]
+        # get min of num_coins above vs arr[row][total val - coin val] + 1
+        new_coin_count = arr[i][(arr[0][j] - arr[i][0]) + 1] + 1
+        arr[i][j] = [arr[i - 1][j], new_coin_count].min
+      else
+        arr[i][j] = arr[i - 1][j]
+      end
+      j += 1
+    end
+    i += 1
+  end
+  arr[i - 1][j - 1]
+end
+
+# p least_coin_change(30, [1,10,25]) #3
+
+
 ##############################################
 ##############################################
 ##############################################
