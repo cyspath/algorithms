@@ -1,3 +1,5 @@
+################## Fibonacci ########################
+
 def fib(n)
   store = {}
   i = 1
@@ -13,7 +15,7 @@ def fib(n)
   store[n]
 end
 
-##########################################
+################## BYTELANDIAN COIN ########################
 
 # Each Bytelandian gold coin has an integer number written on it. A coin n can be exchanged in a bank into three coins: n/2, n/3 and n/4. But these numbers are all rounded down (the banks have to make a profit).
 #
@@ -55,7 +57,7 @@ end
 # p byte_coin(16) #17
 # p byte_coin(6) #6
 
-##############################################
+##################### Matrix top-left to bot-right paths #########################
 
 # Given a MxN matrix, find the total number of possible paths from top-left to bottom-right element, you can go rightwards and downwards only.
 # Now, assume some of the entries in the matrix are blocked, find the number of such paths. For example: For a 3X3 matrix, total number of paths in first case is 6!/3!3! = 20.
@@ -90,8 +92,64 @@ end
 # p topleft_to_botright_path([[0,0,0,0],[0,0,0,0],[0,0,0,0], [0,0,0,0]]) #20
 
 
+###################### COIN CHANGE PROBLEM ########################
 
-##############################################
+# Objec­tive: Given a set of coins and amount, Write an algo­rithm to find out how many ways we can make the change of the amount using the coins given.
+#
+# Exam­ple:
+#
+# Amount = 5
+# coins [] = {1,2,3}
+# Ways to make change = 5
+# {1,1,1,1,1} {1,1,1,2}, {1,2,2}, {1,1,3} {2,3}
+
+# tables:
+
+#   0 1 2 3 4 5
+# 1 1 1 1 1 1 1
+# 2 1 1 2 2 3 3
+# 3 1 1 2 3 4 5
+#
+#   0 1 2 3 4 5 6
+# 1 1 1 1 1 1 1 1
+# 3 1 1 1 2 2 2 3
+# 5 1 1 1 2 2 3 4
+
+def coin_change(total, coins)
+  arr = Array.new(coins.length + 1, nil)
+  arr.map! { |e| e = Array.new(total + 2, nil)  }
+
+  # set up columns and rows
+  i = -2
+  arr[0].map! do |e|
+    i += 1
+  end
+  coins.each_with_index { |e, idx| arr[idx + 1][0] = e }
+
+  # logic
+  i = 1
+  while i < arr.length
+    j = 1
+    while j < arr[i].length
+      if i == 1 || j == 1
+        arr[i][j] = 1
+      elsif arr[0][j] < arr[i][0]
+        arr[i][j] = arr[i - 1][j]
+      else
+        diff = arr[0][j] - arr[i][0]
+        arr[i][j] = arr[i - 1][j] + arr[i][diff + 1]
+      end
+      j +=1
+    end
+    i += 1
+  end
+  arr[i - 1][j - 1]
+end
+
+# p coin_change(5, [1,2,3]) #5 ways
+# p coin_change(6, [1,3,5]) #4 ways
+
+
 ##############################################
 ##############################################
 ##############################################
