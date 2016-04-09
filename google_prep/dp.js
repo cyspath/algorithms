@@ -74,8 +74,6 @@ var sq = function(mat) {
 // ROOM TO IMPROVE - memorize 3 numbers, max num of true above and max num of true to left as you go
 sq(mat)
 
-
-
 // 3. The problem:
 // There are a row of houses. Each house can be painted with three colors: red, blue and green. The cost of painting each house with a certain color is different. You have to paint all the houses such that no two adjacent houses have the same color. You have to paint the houses with minimum cost. How would you do it?
 // Note: The cost of painting house 1 red is different from that of painting house 2 red. Each combination of house and color has its own cost.
