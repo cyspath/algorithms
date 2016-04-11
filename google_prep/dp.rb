@@ -187,26 +187,54 @@ end
 
 
 ##############################################
-# Longest Repeating Subsequence
-# Given a string, find length of the longest repeating subseequence such that the two subsequence don’t have same string character at same position, i.e., any i’th character in the two subsequences shouldn’t have the same index in the original string.
+# Given two integers ‘n’ and ‘sum’, find count of all n digit numbers with sum of digits as ‘sum’. Leading 0’s are not counted as digits.
+# 1 <= n <= 100 and 1 <= sum <= 50000
 #
-# Examples:
+# Example:
 #
-# Input: str = "abc"
-# Output: 0
-# There is no repeating subsequence
-#
-# Input: str = "aab"
-# Output: 1
-# The two subssequence are 'a'(first) and 'a'(second).
-# Note that 'b' cannot be considered as part of subsequence
-# as it would be at same index in bot.
-#
-# Input: str = "aabb"
+# Input:  n = 2, sum = 2
 # Output: 2
+# Explanation: Numbers are 11 and 20
 #
-# Input: str = "axxxy"
-# Output: 2
+# Input:  n = 2, sum = 5
+# Output: 5
+# Explanation: Numbers are 14, 23, 32, 41 and 50
+#
+# Input:  n = 3, sum = 6
+# Output: 21
+
+# THINKING LOGIC....
+# $count = {}
+#   sum
+#    0  1  2  3  4  5  6
+# 1  1  1  1  1  1  1  1
+# 2  1  2  3  4  5  6  7
+# 3  1  3  6  10 15 21 28
+# 4  1  4  10 20 35 56 84
+#
+# for n = 3 sum = 6 we get 28, subtract the 0 elements, so 28 - 7(n=2, sum=6) = 21
+# for n = 4 sum = 3 we get 20, subtract the 0 elements, so 20 - 10 = 10
+
+def count_n_digit_number_with_sum(n, sum)
+  total = recurse_count(n, sum)
+  total - $count[[n - 1, sum]]
+end
+
+def recurse_count(n, sum)
+  return 1 if n == 1
+
+  c = 0
+  (0..sum).each do |s|
+    if !$count[[n - 1, s]]
+      $count[[n - 1, s]] = recurse_count(n - 1, s)
+    end
+    c += $count[[n - 1, s]]
+  end
+  c
+end
+
+# p count_n_digit_number_with_sum(3, 6) #21
+# p count_n_digit_number_with_sum(4, 3) #10
 
 
 ##############################################
