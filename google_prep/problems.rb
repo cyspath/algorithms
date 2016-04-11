@@ -162,7 +162,6 @@ def fib_less_than(n)
   while true
     i = fibs[-1] + fibs[-2]
     if i >= n
-      p fibs
       return fibs.length
     else
       fibs.push(i)
@@ -199,6 +198,55 @@ end
 
 # p max_consec_numbers([-5,2,5,-3,1,6,-4,7,-3,2,1,-4]) #14
 ########################################################################
+# four sum
+# [3,4,8,1,4,5,2,3,5,1,0] to get 12 use [3,4,3,4], [2,1,1,8] etc
+
+def four_sum(arr, sum)
+  hash = {}
+
+  i = 0
+  while i < arr.length - 1
+    j = i + 1
+    while j < arr.length
+      # hash will have sum as key, and val is another hash where its keys are
+      # i and j indexs and values are arr[i] and arr[j]
+      current_sum = arr[i] + arr[j]
+      current_pair = {i => arr[i], j => arr[j]}
+      if hash[current_sum]
+        hash[current_sum].push(current_pair)
+      else
+        hash[current_sum] = [current_pair]
+      end
+
+      j += 1
+    end
+    i += 1
+  end
+
+  result = []
+  hash.each do |k, v|
+    diff = sum - k
+    if hash[diff]
+      arr1 = hash[diff]
+      arr2 = v
+      arr1.each do |el_a|
+        arr2.each do |el_b|
+          if el_a.keys.include?(el_b.keys[0]) || el_a.keys.include?(el_b.keys[1])
+            next
+          else
+            quad = el_a.values.concat(el_b.values).sort
+            result.push(quad) if !result.include?(quad)
+          end
+        end
+      end
+
+    end
+
+  end
+  result
+end
+
+# p four_sum([5,13,1,7,16,4,2,1,3], 25) # [[3, 4, 5, 13], [2, 3, 4, 16], [1, 3, 5, 16], [2, 3, 7, 13], [1, 4, 7, 13], [1, 1, 7, 16]]
 
 ########################################################################
 ########################################################################
