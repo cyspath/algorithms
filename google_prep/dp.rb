@@ -274,6 +274,23 @@ end
 # The sub-strings of 123 are 1, 2, 3, 12, 23, 123 which sums to 164.
 
 
+def combination(arr)
+  return [[]] if arr.length == 0
+  current = arr.pop
+  result = combination(arr)
+  result.concat(result.map { |el| el.dup.push(current) })
+end
+
+# def sum_of_comb(str)
+#   sum = 0
+#   arr = str.split("")
+#   combination(arr).each do |el|
+#     sum += el.join("").to_i
+#   end
+#   sum
+# end
+
+
 ##############################################
 ##############################################
 ##############################################
