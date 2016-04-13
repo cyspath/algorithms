@@ -290,6 +290,21 @@ end
 #   sum
 # end
 
+def sum_of_comb(str)
+  arr = str.split("")
+  sum = 0
+
+  i = 0
+  while i < arr.length
+    j = i
+    while j < arr.length
+      sum += (arr[i..j].join("").to_i)
+      j += 1
+    end
+    i += 1
+  end
+  sum % (10**9+7)
+end
 
 ##############################################
 ##############################################

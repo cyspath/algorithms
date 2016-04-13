@@ -97,3 +97,33 @@ function minPaint(rc,gc,bc) {
         i++
     }
 }
+
+
+function combination(arr) {
+  if (arr.length == 0) { return [[]] }
+  var current = arr.splice(0, 1)
+  result = combination(arr)
+
+  var resultNew = []
+  for (var i = 0; i < result.length; i++) {
+    resultNew.push(result[i].slice())
+    resultNew.push(result[i].concat(current))
+  }
+  return resultNew
+}
+
+combination(['a','b','c'])
+function permutation(ary){
+  var k = ary.shift(); //remove the first element
+  var o;
+  if(ary.length>0){ //
+    o = permutation(ary);
+  } else {
+    o = [[]];
+  }
+  var l = o.length;
+  for(var i = 0; i< l; i++){
+    o.push(o[i].concat(k));
+  }
+  return o;
+}
