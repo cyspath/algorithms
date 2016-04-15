@@ -249,7 +249,48 @@ end
 # p four_sum([5,13,1,7,16,4,2,1,3], 25) # [[3, 4, 5, 13], [2, 3, 4, 16], [1, 3, 5, 16], [2, 3, 7, 13], [1, 4, 7, 13], [1, 1, 7, 16]]
 
 ########################################################################
+
+# The is a clever interview question that asks you to calculate the cube root of a number quickly. We can solve this by some mathematical tricks that won't require any calculates to take place, only table lookups. This algorithm will focus on calculating the cube root of 6 digit numbers (or less). For example, if the input is 636056 then your program should output 86.
+
+def cube_root(n)
+  # n is less than 1,000,000
+  digits = {0=>0, 1=>1, 2=>8, 3=>7, 4=>4, 5=>5, 6=>6, 7=>3, 8=>2, 9=>9}
+  digit = digits[n % 10]
+
+  (0..9).to_a.each do |t|
+    tens = (t * 10)**3
+    if n > tens
+      next
+    elsif n < tens
+      return (t - 1) * 10 + digit
+    end
+  end
+  90 + digit
+end
+
+# p cube_root(636056) #86
+
 ########################################################################
+
+# For this popular algorithm interview question, the input will be a string consisting only of the characters 0, 1 and ?, where the ? acts as a wildcard that can be either a 0 or 1, and your goal is to print all possible combinations of the string. For example, if the string is "011?0" then your program should output a set of all strings, which are: ["01100", "01110"].
+
+def all_possible_01(str)
+  i = 0
+  while i < str.length
+    if str[i] == "?"
+      a = all_possible_01(str[i+1..-1]).map{ |s| str[0..i-1] + "1" + s }
+      b = all_possible_01(str[i+1..-1]).map{ |s| str[0..i-1] + "0" + s }
+      return a.concat(b)
+    end
+    i += 1
+  end
+  [str]
+end
+
+
+
+p all_possible_01("aa?b?ccc?d")
+
 ########################################################################
 ########################################################################
 ########################################################################
