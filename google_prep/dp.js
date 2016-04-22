@@ -1,3 +1,25 @@
+var possibleBinary = function(arr, i){
+  if (i === arr.length) {
+    // stop
+    console.log(arr);
+    return;
+  }
+
+  if(arr[i] === "?") {
+    var arr2 = arr.slice()
+    arr2[i] = 0;
+    possibleBinary(arr2, i+1);
+
+    var arr3 = arr.slice()
+    arr3[i] = 1;
+    possibleBinary(arr3, i+1);
+  }else{
+    possibleBinary(arr, i+1);
+  }
+}
+
+possibleBinary(['?','?'], 0);
+
 //2. Given a 2D matrix of booleans, find the biggest continuous square submatrix of "trues" and return its dimension.
 //Example:
 // t t t t t t

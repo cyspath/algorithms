@@ -278,9 +278,9 @@ def all_possible_01(str)
   i = 0
   while i < str.length
     if str[i] == "?"
-      a = all_possible_01(str[i+1..-1]).map{ |s| str[0..i-1] + "1" + s }
-      b = all_possible_01(str[i+1..-1]).map{ |s| str[0..i-1] + "0" + s }
-      return a.concat(b)
+      a = all_possible_01(str[i+1..-1])
+      b = all_possible_01(str[i+1..-1])
+      return a.concat(b).map{ |s| str[0..i-1] + "1" + s }
     end
     i += 1
   end
@@ -289,10 +289,84 @@ end
 
 
 
-p all_possible_01("aa?b?ccc?d")
+# p all_possible_01("aa?b?ccc?d")
 
 ########################################################################
+
+# Car parking problem. An array given represents actual order of cars need to be parked. Like for example order is 4,6,5,1,7,3,2,empty. If cars are parked in some order like empty,1,2,3,7,6,4,2. Some person needs to get them into correct order, list out all instructions to the person to get in correct order with least number of swaps.
+
+def car_parking(current, result)
+  final_empty_idx = result.index(nil)
+
+  hash = {}
+  (0..current.length - 1).each do |idx|
+    hash[current[idx]] = idx
+  end
+
+  while hash[nil] != final_empty_idx
+    swap_el = result[hash[nil]]
+    swap_el_idx = hash[swap_el]
+    nil_pos = hash[nil]
+
+    hash[nil] = swap_el_idx
+    hash[swap_el] = nil_pos
+
+    hash.values.sort.each do |i|
+      hash.each do |k,v|
+        if v == i
+          print (k.to_s + " ")
+        end
+      end
+    end
+    puts
+  end
+
+  hash
+end
+
+# p car_parking([nil,1,2,3,7,6,4,2], [4,6,5,1,7,3,2,nil])
+
 ########################################################################
+
+# excel header problem
+
+def excel_header_to_n(str)
+  arr = str.split("")
+
+  multiplier = {}
+  ("A".."Z").to_a.each_with_index { |l, i| multiplier[l] = i + 1 }
+
+  expo = []
+  arr.each_with_index { |l, i| expo.push(arr.length - 1 - i) }
+
+  accum = 0
+  arr.each_with_index do |letter, idx|
+    accum += 26**(expo[idx]) * multiplier[letter]
+  end
+
+  accum
+end
+
+def excel_header_to_l(n)
+  dic = {}
+  ("A".."Z").to_a.each_with_index { |l, i| dic[i + 1] = l }
+
+  result = ""
+  while n >= 0
+    break if n == 0
+    result = dic[n % 26] + result
+    n = n / 26
+  end
+
+  result
+end
+ 
+# p excel_header_to_n("AA") #27
+# p excel_header_to_n("AAC") #705
+#
+# p excel_header_to_l(27) # "AA"
+# p excel_header_to_l(705) # "AAC"
+
 ########################################################################
 ########################################################################
 ########################################################################

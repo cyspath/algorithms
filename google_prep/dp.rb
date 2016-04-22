@@ -307,7 +307,90 @@ def sum_of_comb(str)
 end
 
 ##############################################
+
+def longest_increasing_subseq(arr)
+
+  l_arr = Array.new(arr.length, 1)
+  idx_arr = Array.new(arr.length, nil)
+
+  i = 0
+  j = 1
+  while j < arr.length && i < arr.length - 1
+    if arr[j] > arr[i] && l_arr[j] <= l_arr[i] + 1
+      l_arr[j] = l_arr[i] + 1
+      idx_arr[j] = i
+    end
+
+    if i == j - 1
+      i = 0
+      j += 1
+      next
+    end
+    i += 1
+  end
+
+  # search for the sequence
+  length_idx = l_arr.index(l_arr.max)
+  result = [length_idx]
+  while true
+    break if idx_arr[length_idx] == nil
+    length_idx = idx_arr[length_idx]
+    result.unshift(length_idx)
+  end
+
+  puts 'length max is ' + l_arr.max.to_s
+  'subsequence is ' + result.map {|i| arr[i] }.join(", ")
+end
+
+# p longest_increasing_subseq([3,4,-1,0,6,2,3]) #4
+
 ##############################################
+
+# Input: arr[] = {10, 22, 9, 33, 49, 50, 31, 60}
+# Output: 6
+# The subsequences {10, 22, 9, 33, 31, 60} or
+# {10, 22, 9, 49, 31, 60} or {10, 22, 9, 50, 31, 60}
+
+def longest_alternating_subseq(arr)
+  "longest increasing seq is #{alternating_subseq(arr, true)} and longest decreasing seq is #{alternating_subseq(arr, false)}"
+end
+
+def alternating_subseq(arr, increasing)
+  l_arr = Array.new(arr.length, 1)
+  d_arr = Array.new(arr.length, increasing)
+
+  i = 0
+  j = 1
+
+  while j < arr.length && i < arr.length - 1
+
+    if d_arr[i] == true # increasing
+      if arr[j] > arr[i] && l_arr[j] <= l_arr[i] + 1
+        l_arr[j] = l_arr[i] + 1
+        d_arr[j] = false
+      end
+    else
+      if arr[j] < arr[i] && l_arr[j] <= l_arr[i] + 1
+        l_arr[j] = l_arr[i] + 1
+        d_arr[j] = true
+      end
+    end
+
+    if i == j - 1
+      i = 0
+      j += 1
+      next
+    end
+
+    i += 1
+  end
+
+  l_arr.max
+end
+
+# p longest_alternating_subseq([10, 22, 9, 33, 49, 50, 31, 60]) #6
+# p longest_alternating_subseq([55, 10, 22, 9, 33, 49, 50, 31, 60]) #7
+
 ##############################################
 ##############################################
 ##############################################
