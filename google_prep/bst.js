@@ -64,6 +64,7 @@ var mike =  function(node) {
   um(node)
   return result
 }
+
 var um = function(node) {
   if (node.left != null) {
     um(node.left)
@@ -82,12 +83,14 @@ var LinkedList = function() {
   this.current = null
   this.length = 0
 }
+
 LinkedList.prototype.print = function () {
   while (this.current != null) {
     console.log(this.current.data + " -> ")
     this.current = this.current.next
   }
 };
+
 LinkedList.prototype.add = function (node) {
   if (this.head == null) {
     this.head = node
@@ -99,6 +102,8 @@ LinkedList.prototype.add = function (node) {
   }
   this.length += 1
 };
+
+
 var Node = function(data) {
   this.data = data,
   this.next = nil
