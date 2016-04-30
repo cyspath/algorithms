@@ -59,4 +59,23 @@ def find_path(node)
   $arr
 end
 
-p find_path(root)
+# p find_path(root)
+
+def two_sum_time(arr, sum)
+  hash = {}
+  arr.each do |n|
+    hash[n] ? hash[n] += 1 : hash[n] = 1
+  end
+
+  result = []
+  arr.each do |n|
+    if hash[sum - n] && hash[sum - n] > 0
+      hash[sum - n] -= 1
+      hash[n] -= 1
+      result.push([n, sum - n])
+    end
+  end
+  result
+end
+
+p two_sum_time([2,3,-2,1,5,4,6,3], 5)
