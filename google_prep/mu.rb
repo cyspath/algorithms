@@ -78,4 +78,27 @@ def two_sum_time(arr, sum)
   result
 end
 
-p two_sum_time([2,3,-2,1,5,4,6,3], 5)
+# p two_sum_time([2,3,-2,1,5,4,6,3], 5)
+
+
+def two_sum_space(arr, sum)
+  arr.sort! # use quick or merge sort if not builtin
+  result = []
+
+  i = 0
+  j = arr.length - 1
+  while i != j
+    current_sum = arr[i] + arr[j]
+    if current_sum == sum
+      result.push([arr[i], arr[j]])
+      i += 1
+    elsif current_sum < sum
+      i += 1
+    else # when current_sum > sum
+      j -= 1
+    end
+  end
+  result
+end
+
+p two_sum_space([2,3,-2,1,5,4,6,3], 5)
