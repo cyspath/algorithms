@@ -360,7 +360,7 @@ def excel_header_to_l(n)
 
   result
 end
- 
+
 # p excel_header_to_n("AA") #27
 # p excel_header_to_n("AAC") #705
 #
@@ -368,6 +368,39 @@ end
 # p excel_header_to_l(705) # "AAC"
 
 ########################################################################
+
+# A decimal representing of the fraction of positive numbers in the array.
+# A decimal representing of the fraction of negative numbers in the array.
+# A decimal representing of the fraction of zeroes in the array.
+# Sample Input
+#
+# 6
+# -4 3 -9 0 4 1
+# Sample Output
+#
+# 0.500000
+# 0.333333
+# 0.166667
+
+def count_pos_neg_zero_numbers(arr)
+  hash = { pos: 0, zero: 0, neg: 0 }
+  arr.each do |n|
+    if n > 0
+      hash[:pos] += 1
+    elsif n < 0
+      hash[:neg] += 1
+    else
+      hash[:zero] += 1
+    end
+  end
+  total = hash.values.inject(:+).to_f
+  puts hash[:pos]/total
+  puts hash[:neg]/total
+  puts hash[:zero]/total
+end
+
+count_pos_neg_zero_numbers([-4, 3, -9, 0, 4, 1])
+
 ########################################################################
 ########################################################################
 ########################################################################
