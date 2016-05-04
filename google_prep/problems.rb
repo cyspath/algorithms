@@ -399,9 +399,34 @@ def count_pos_neg_zero_numbers(arr)
   puts hash[:zero]/total
 end
 
-count_pos_neg_zero_numbers([-4, 3, -9, 0, 4, 1])
+# count_pos_neg_zero_numbers([-4, 3, -9, 0, 4, 1])
 
 ########################################################################
+
+# make rand7 with rand5 as well as rand2
+
+def rand_checker
+  store = {}
+  1000000.times do
+    n = rand_7_from_5
+    store[n] ? store[n] += 1 : store[n] = 0
+  end
+  store
+end
+
+def rand_7_from_5
+  while true
+    n = 5 * rand(5) + rand(5) # 0..24 equal chance of any
+    return n % 7 if n < 21
+  end
+end
+
+def rand_7_from_2
+  
+
+p rand_checker
+# p rand_7_from_5
+
 ########################################################################
 ########################################################################
 ########################################################################
