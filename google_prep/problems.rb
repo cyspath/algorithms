@@ -408,10 +408,12 @@ end
 def rand_checker
   store = {}
   1000000.times do
-    n = rand_7_from_5
+    # n = rand_7_from_5
+    n = rand_7_from_2
     store[n] ? store[n] += 1 : store[n] = 0
   end
-  store
+  p store.keys.sort
+  store.values.map {|v| v/1000}
 end
 
 def rand_7_from_5
@@ -422,9 +424,13 @@ def rand_7_from_5
 end
 
 def rand_7_from_2
-  
+  while true
+    n = 4 * rand(2) + 2 * rand(2) + rand(2)
+    return n % 7 if n < 7
+  end
+end
 
-p rand_checker
+# p rand_checker
 # p rand_7_from_5
 
 ########################################################################
