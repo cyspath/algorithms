@@ -368,7 +368,7 @@ end
 # p excel_header_to_l(705) # "AAC"
 
 ########################################################################
-
+### VERY EASY
 # A decimal representing of the fraction of positive numbers in the array.
 # A decimal representing of the fraction of negative numbers in the array.
 # A decimal representing of the fraction of zeroes in the array.

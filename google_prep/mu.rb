@@ -101,4 +101,26 @@ def two_sum_space(arr, sum)
   result
 end
 
-p two_sum_space([2,3,-2,1,5,4,6,3], 5)
+# p two_sum_space([2,3,-2,1,5,4,6,3], 5)
+
+def three_sum(arr, sum)
+  arr.sort! #nlogn, this sorting step is critical in avoiding duplicates
+  store = {}
+  result = []
+
+  arr.each_with_index { |n, idx| store[n] ? store[n].push(idx) : store[n] = [idx] }
+
+  i = 0
+  while i < arr.length - 1
+    j = i + 1
+    while j < arr.length
+      d = sum - arr[i] - arr[j]
+      result.push([arr[i], arr[j], d]) if store[d] && store[d].last > j
+      j += 1
+    end
+    i += 1
+  end
+  result # nlogn + n^2 = n^2 overall runtime
+end
+
+# p three_sum([2,3,-2,1,4,2], 7)
