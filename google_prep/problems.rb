@@ -479,11 +479,12 @@ end
 #   [7*3*4, 1*3*4, 1*7*4, 1*7*3]
 
 def get_products_of_all_ints_except_at_index(a)
-  prod = a.inject(:*)
-  a.map { |n| prod / n }
+  prod = 1
+  a.each { |n| prod *= n if n != 0 }
+  a.map { |n| n == 0 ? prod : prod / n }
 end
 
-# p get_products_of_all_ints_except_at_index([1, 7, 3, 4]) #[84, 12, 28, 21]
+p get_products_of_all_ints_except_at_index([0, 1, 7, 3, 4]) #[84, 84, 12, 28, 21]
 
 
 ########################################################################
