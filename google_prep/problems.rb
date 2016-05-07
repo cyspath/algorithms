@@ -498,7 +498,6 @@ end
 # The input list_of_ints will always have at least three integers.
 
 def max_prod(a)
-  binding.pry
   first = nil
   second = a[0]
   third = nil
@@ -528,8 +527,8 @@ def max_prod(a)
   first * second * third
 end
 
-p max_prod([2,5,1,8,3,10,4]) # 400
-p max_prod([−10,−10,1,3,2])
+# p max_prod([2,5,1,8,3,10,4]) # 400
+p max_prod([-10,-10,1,3,2])
 
 
 ########################################################################
