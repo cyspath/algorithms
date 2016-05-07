@@ -484,10 +484,54 @@ def get_products_of_all_ints_except_at_index(a)
   a.map { |n| n == 0 ? prod : prod / n }
 end
 
-p get_products_of_all_ints_except_at_index([0, 1, 7, 3, 4]) #[84, 84, 12, 28, 21]
+def get_products_of_all_ints_except_at_index_no_division(a)
+  prod = 1
+  a.each { |n| prod *= n if n != 0 }
+  a.map { |n| n == 0 ? prod : prod / n }
+end
 
+# p get_products_of_all_ints_except_at_index([0, 1, 7, 3, 4]) #[84, 84, 12, 28, 21]
 
 ########################################################################
+
+# Given a list_of_ints, find the highest_product you can get from three of the integers.
+# The input list_of_ints will always have at least three integers.
+
+def max_prod(a)
+  binding.pry
+  first = nil
+  second = a[0]
+  third = nil
+
+  i = 1
+  while i < a.length
+    if a[i] <= second
+      if third.nil?
+        third = a[i]
+      else
+        third = [third, a[i]].max
+      end
+    else
+      if first.nil?
+        first = a[i]
+      elsif first > a[i]
+        third = second
+        second = a[i]
+      else
+        third = second
+        second = first
+        first = a[i]
+      end
+    end
+    i += 1
+  end
+  first * second * third
+end
+
+p max_prod([2,5,1,8,3,10,4]) # 400
+p max_prod([−10,−10,1,3,2])
+
+
 ########################################################################
 ########################################################################
 ########################################################################
