@@ -502,7 +502,7 @@ def max_prod(a)
   second = a[0]
   third = nil
 
-  first_neg = nil
+  a[0] < 0 ? first_neg = a[0] : first_neg = nil
   second_neg = nil
 
   i = 1
