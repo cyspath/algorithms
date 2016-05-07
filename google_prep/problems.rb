@@ -502,8 +502,12 @@ def max_prod(a)
   second = a[0]
   third = nil
 
+  first_neg = nil
+  second_neg = nil
+
   i = 1
   while i < a.length
+    # arranging the three counters
     if a[i] <= second
       if third.nil?
         third = a[i]
@@ -522,9 +526,26 @@ def max_prod(a)
         first = a[i]
       end
     end
+
+    # if number is negative, arrange them
+    if a[i] < 0
+      if first_neg.nil?
+        first_neg = a[i]
+      elsif a[i] <= first_neg
+        second_neg = first_neg
+        first_neg = a[i]
+      else
+        second_neg = [second_neg, a[i]].min
+      end
+    end
     i += 1
   end
-  first * second * third
+
+  if first_neg.nil? || second_neg.nil?
+    first * second * third
+  else
+    [first * second * third, first_neg * second_neg * first].max
+  end
 end
 
 p max_prod([2,5,1,8,3,10,4]) # 400
