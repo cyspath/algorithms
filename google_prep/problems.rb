@@ -641,9 +641,89 @@ end
 # p scheduler([[0, 1], [3, 5], [4, 8], [10, 12], [9, 10]])
 # p scheduler([[1, 10], [2, 6], [3, 5], [7, 9]])
 
+#################################  RECTANGLE LOVE #######################################
 
-########################################################################
-########################################################################
+def intersecting_rect(r1, r2)
+  intesection = {}
+
+  if r1['left_x'] < r2['left_x']
+    left_rect = r1
+    right_rect = r2
+  else
+    left_rect = r2
+    right_rect = r1
+  end
+
+  left_rect_right_x = left_rect['left_x'] + left_rect['width']
+  right_rect_right_x = right_rect['left_x'] + right_rect['width']
+
+  return nil if left_rect_right_x < right_rect["left_x"]
+
+  intersection["left_x"] = right_rect['left_x']
+  intersection["width"] = right_rect_right_x > left_rect_right_x ? left_rect_right_x - right_rect['left_x'] : right_rect['width']
+
+  if r1['bottom_y'] > r2['bottom_y']
+    top_rect = r1
+    bottom_rect = r2
+  else
+    top_rect = r2
+    bottom_rect = r1
+  end
+
+  top_rect_top_y = top_rect["bottom_y"] + top_rect["height"]
+  bottom_rect_top_y = bottom_rect["bottom_y"] + top_rect["height"]
+
+  return nil if bottom_rect_top_y < top_rect["bottom_y"]
+
+  intersection["bottom_y"] = top_rect["bottom_y"]
+  intersection["height"] = top_rect_top_y > bottom_rect_top_y ? bottom_rect_top_y - top_rect["bottom_y"] : top_rect["height"]
+
+  intersection
+end
+
+################################# FAHREHEIT TRACKER #######################################
+
+class TempTracker
+  def initialize
+    @list = []
+    @hash = {} # mode storing
+    @mode = nil
+    @sum = 0 # used for mean calc
+    @max = nil
+    @min = nil
+    @mode = nil
+    @mean = nil
+  end
+
+  def insert(t)
+    @list.push(t)
+    @hash[t] ? @hash[t] += 1 : @hash[t] = 1
+    @mode = t if @mode.nil? || @hash[t] > @hash[@mode]
+    @sum += t
+    @max = t if @max.nil? || @max < t
+    @min = t if @min.nil? || @min > t
+    result = { "max" => @max, "min" => @min, "mean" => get_mean, "mode" => get_mode }
+    p result
+  end
+
+  def get_max
+    @max
+  end
+
+  def get_min
+    @min
+  end
+
+  def get_mean
+    @sum.to_f / @list.length
+  end
+
+  def get_mode
+    @mode
+  end
+end
+
+
 ########################################################################
 ########################################################################
 ########################################################################
