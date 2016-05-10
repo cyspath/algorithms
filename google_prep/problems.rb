@@ -702,8 +702,6 @@ class TempTracker
     @sum += t
     @max = t if @max.nil? || @max < t
     @min = t if @min.nil? || @min > t
-    result = { "max" => @max, "min" => @min, "mean" => get_mean, "mode" => get_mode }
-    p result
   end
 
   def get_max
@@ -724,7 +722,60 @@ class TempTracker
 end
 
 
-########################################################################
+############################## SUPERBALANCED BINARY TREE ##########################################
+
+def super_balanced_btree(node) # leaf nodes are no greater than 1 in depth
+  if node.left.nil? && node.right.nil?
+    return 1
+  end
+
+  left = super_balanced_btree(node.left) if node.left
+  right = super_balanced_btree(node.right) if node.right
+
+  return false if left == false || right == false
+
+  if node.left && node.right
+    return false if (left - right).abs > 1
+    return [left, right].max
+  elsif node.left
+    return left + 1
+  else
+    return right + 1
+  end
+end
+
+# # Actual Tree for Testing
+#
+# class Node
+#     attr_accessor :val, :left, :right
+#     def initialize(val)
+#         @val = val
+#         @left, @right = nil, nil
+#     end
+# end
+#
+# root = Node.new(5)
+# root.left = Node.new(2)
+# root.left.left = Node.new(1)
+# root.left.right = Node.new(4)
+# root.left.right.left = Node.new(3)
+#
+# root.right = Node.new(7)
+# root.right.left = Node.new(6)
+# root.right.right = Node.new(9)
+# root.right.right.left = Node.new(8)
+# root.right.right.right = Node.new(10)
+#
+# #           5
+# #       /       \
+# #     2           7
+# #   /   \       /   \
+# # 1       4    6     9
+# #       /          /   \
+# #     3           8     10
+
+p super_balanced_btree(root)
+
 ########################################################################
 ########################################################################
 ########################################################################
