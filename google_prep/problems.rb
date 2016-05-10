@@ -552,7 +552,52 @@ end
 # p max_prod([-10,-10,1,3,2]) # 300
 
 
-########################################################################
+################################## MAKING CHANGE ######################################
+
+# Your quirky boss found out that you're a programmer and has a weird request about something they've been wondering for a long time.
+#
+# Write a function that, given:
+#
+# an amount of money
+# a list of coin denominations
+# computes the number of ways to make amount of money with coins of the available denominations.
+#
+# Example: for amount=4 (4¢) and denominations=[1,2,3] (1¢, 2¢ and 3¢), your program would output 4—the number of ways to make 44¢ with those denominations:
+#
+# 1¢, 1¢, 1¢, 1¢
+# 1¢, 1¢, 2¢
+# 1¢, 3¢
+# 2¢, 2¢
+
+def making_change_icake(total, coins)
+  grid = Array.new(coins.length + 1).map { |el| Array.new(total + 1) }
+  i = 0
+  while i < grid.length
+    j = 0
+    while j < grid[i].length
+      if j == 0
+        grid[i][j] = 1
+      elsif i == 0
+        grid[i][j] = 0
+      elsif j < coins[i - 1]
+        grid[i][j] = grid[i - 1][j]
+      else
+        without_new_coin = grid[i - 1][j]
+        with_new_coin = grid[i][j - coins[i - 1]]
+        grid[i][j] = without_new_coin + with_new_coin
+      end
+      j += 1
+    end
+    i += 1
+  end
+  grid[-1][-1]
+end
+
+# p making_change_icake(4, [1,2,3]) #4
+# p making_change_icake(9, [1,4,5]) #5
+
+
+
 ########################################################################
 ########################################################################
 ########################################################################
