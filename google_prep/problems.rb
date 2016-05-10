@@ -596,9 +596,52 @@ end
 # p making_change_icake(4, [1,2,3]) #4
 # p making_change_icake(9, [1,4,5]) #5
 
+################################## SCHEDULER ######################################
+  [[0, 1], [3, 8], [9, 12]]
+
+def scheduler(arr)
+  a = merge_sort_arr(arr) # [[0, 1], [3, 5], [4, 8], [9, 10], [10, 12]]
+  result = []
+
+  min = arr[0][0]
+  max = arr[0][1]
+
+  a.each do |el|
+    if el[0] < max && el[1] > max
+      max = el[1]
+    elsif el[0] >= max
+      result.push([min, max])
+      min = el[0]
+      max = el[1]
+    end
+  end
+  result.push [min, max]
+  result
+end
+
+def merge_sort_arr(arr)
+  return arr if arr.length <= 1
+  left = arr.take(arr.length/2)
+  right = arr.drop(arr.length/2)
+  merge_array(merge_sort_arr(left), merge_sort_arr(right))
+end
+
+def merge_array(left, right)
+  result = []
+  while left.length != 0 && right.length != 0
+    if left[0][0] > right[0][0]
+      result.push(right.shift)
+    else
+      result.push(left.shift)
+    end
+  end
+  result.concat(left).concat(right)
+end
+
+# p scheduler([[0, 1], [3, 5], [4, 8], [10, 12], [9, 10]])
+# p scheduler([[1, 10], [2, 6], [3, 5], [7, 9]])
 
 
-########################################################################
 ########################################################################
 ########################################################################
 ########################################################################
