@@ -856,44 +856,40 @@ end
 
 # p second_largest_in_bst(root)
 
-########################################################################
-########################################################################
-########################################################################
-########################################################################
-########################################################################
+################################## MILLION GAZILLION ######################################
+#
+# I wrote a crawler that visits web pages, stores a few keywords in a database, and follows links to other web pages. I noticed that my crawler was wasting a lot of time visiting the same pages over and over, so I made a dictionary visited where I'm storing URLs I've already visited. Now the crawler only visits a URL if it hasn't already been visited.
+#
+# Thing is, the crawler is running on my old desktop computer in my parents' basement (where I totally don't live anymore), and it keeps running out of memory because visited is getting so huge.
+#
+# How can I trim down the amount of space taken up by visited?
 
+
+########################################################################
+########################################################################
+########################################################################
+############################# WONKY COINS ###########################################
 
 def wc(n)
   a = [n]
   while true
-    everything_zero = true
-    a.each do |n|
-      if n != 0
-        everything_zero = false
-        break
-      end
-    end
-
-    if everything_zero == true
-      break
-    else
-      # divide the non zeros and add to array
-      a = change_arr(a)
-    end
+    break if a.uniq.length == 1 && a.first == 0
+    # divide the non zeros and add to array
+    a = change_arr(a)
   end
   a.length
 end
 
 def change_arr(arr)
   result = []
-  arr.each do |n|
-    if n == 0
-      result.push n
-    else
-      result << n/2 << n/3 << n/4
-    end
-  end
+  arr.each { |n| n == 0 ? result.push(n) : result.push(n/2).push(n/3).push(n/4) }
   result
 end
 
-p wc(5)
+def wc_rec(n)
+  return 1 if n == 0
+  wc_rec(n/2) + wc_rec(n/3) + wc_rec(n/4)
+end
+
+# p wc(6) #15
+# p wc_rec(6) #15
