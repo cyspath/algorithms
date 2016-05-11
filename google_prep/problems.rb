@@ -774,11 +774,126 @@ end
 # #       /          /   \
 # #     3           8     10
 
-p super_balanced_btree(root)
+# p super_balanced_btree(root)
+
+################################ BST PROBLEMS ########################################
+
+# Actual Tree for Testing
+
+class Node
+    attr_accessor :val, :left, :right
+    def initialize(val)
+        @val = val
+        @left, @right = nil, nil
+    end
+end
+
+root = Node.new(5)
+root.left = Node.new(2)
+root.left.left = Node.new(1)
+root.left.right = Node.new(4)
+root.left.right.left = Node.new(3)
+root.left.right.left.left = Node.new(2.5)
+root.left.right.left.left.right = Node.new(2.7)
+
+
+root.right = Node.new(7)
+root.right.left = Node.new(6)
+root.right.right = Node.new(9)
+root.right.right.left = Node.new(8)
+root.right.right.left.right = Node.new(8.5)
+root.right.right.right = Node.new(10)
+root.right.right.right.right = Node.new(11)
+
+#           5
+#       /       \
+#     2           7
+#   /   \       /   \
+# 1       4    6     9
+#       /          /   \
+#     3           8     10
+#   /              \      \
+# 2.5             8.5     11
+#  \
+#   2.7
+
+$in_order = []
+
+def is_bst(root)
+  add_values_to_in_order(root)
+  current = nil
+  $in_order.each do |n|
+    if current.nil?
+      current = n
+      next
+    end
+    return false if n <= current
+    current = n
+  end
+  true
+end
+
+def add_values_to_in_order(root)
+  add_values_to_in_order(root.left) if root.left
+  $in_order.push(root.val)
+  add_values_to_in_order(root.right) if root.right
+end
+
+# p is_bst(root)
+
+$in_order_rev = []
+
+def second_largest_in_bst(root)
+  add_values_to_in_order_reverse(root)
+  $in_order_rev[1]
+end
+
+def add_values_to_in_order_reverse(root)
+  add_values_to_in_order_reverse(root.right) if root.right
+  $in_order_rev.push root.val
+  add_values_to_in_order_reverse(root.left) if root.left
+end
+
+# p second_largest_in_bst(root)
 
 ########################################################################
 ########################################################################
 ########################################################################
 ########################################################################
 ########################################################################
-########################################################################
+
+
+def wc(n)
+  a = [n]
+  while true
+    everything_zero = true
+    a.each do |n|
+      if n != 0
+        everything_zero = false
+        break
+      end
+    end
+
+    if everything_zero == true
+      break
+    else
+      # divide the non zeros and add to array
+      a = change_arr(a)
+    end
+  end
+  a.length
+end
+
+def change_arr(arr)
+  result = []
+  arr.each do |n|
+    if n == 0
+      result.push n
+    else
+      result << n/2 << n/3 << n/4
+    end
+  end
+  result
+end
+
+p wc(5)
