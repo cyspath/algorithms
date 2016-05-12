@@ -1020,7 +1020,39 @@ end
 # p rev('abcd')
 # p rev('abcde')
 
-########################################################################
+############################### REVERSE STR OF WORDS IN PLACE #########################################
+
+# Write a function reverse_words() that takes a string message and reverses the order of the words in-place
+
+# reverse whole str then reverse each word
+def rev_str_words(str)
+  r_str = rev(str)
+  i = 0
+  while i < r_str.length
+    j = i
+    while j < r_str.length
+      if r_str[j] == " "
+        r_str[i..j-1] = rev(r_str[i..j-1])
+        i = j
+        break
+      end
+      j += 1
+    end
+    if j >= r_str.length
+      r_str[i..j] = rev(r_str[i..j])
+      break
+    end
+    i += 1
+  end
+
+  r_str
+end
+
+p rev_str_words("today is")
+
+p rev_str_words("today is thursday the 12th")
+
+
 ########################################################################
 ########################################################################
 ########################################################################
