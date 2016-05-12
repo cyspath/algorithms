@@ -1048,7 +1048,43 @@ end
 # p rev_str_words("today is thursday the 12th")
 
 
-########################################################################
+################################## FIND CLOSING PARENTHESIS ######################################
+
+sentence_with_parenthesis = "Sometimes (when I nest them (my parentheticals) too much (like this (and this))) they get confusing."
+#
+# Given a sentence like the one above, along with the position of an opening parenthesis, finds the corresponding closing parenthesis.
+#
+# Example: if the example string above is input with the number 10 (position of the first parenthesis), the output should be 79 (position of the last parenthesis).
+
+def find_closing_parenthesis(sentence, idx)
+  idxs = []
+  hash = {}
+  sentence.split("").each_with_index do |l, i|
+    if l == "(" || l == ")"
+      hash[i] = l
+      idxs.push(i)
+    end
+  end
+
+  i = 0
+  while i < idxs.length - 1
+    if (hash[idxs[i]] == "(" && hash[idxs[i + 1]] == ")") && idxs[i] != idx
+      idxs.delete_at(i + 1)
+      idxs.delete_at(i)
+      i = 0
+      next
+    elsif hash[idxs[i]] == "(" && hash[idxs[i + 1]] == ")"
+      return idxs[i + 1]
+    end
+    i += 1
+  end
+
+end
+
+# p find_closing_parenthesis(sentence_with_parenthesis, 10) #79
+# p find_closing_parenthesis("(()(()))", 3) #6
+
+
 ########################################################################
 ########################################################################
 ########################################################################
