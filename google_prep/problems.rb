@@ -922,15 +922,16 @@ def max_duffel_bag_value(cake_values, capacity)
   grid[i - 1][j - 1]
 end
 
-p max_duffel_bag_value([[1,15], [2,90], [4,160]], 6)
+# p max_duffel_bag_value([[1,15], [2,90], [4,160]], 6)
 
 ################################## JAVASCRIPT HOISTING ######################################
 
-var text = 'outside';
-function logIt(){
-  console.log(text);
-};
-logIt();
+# var text = 'outside';
+# function logIt(){
+#   console.log(text);
+# };
+# logIt();
+
 ############################# WONKY COINS ###########################################
 
 def wc(n)
@@ -960,6 +961,7 @@ end
 ################################# GET MAX VAL IN STACK #######################################
 
 class Stack
+  attr_reader :values
   def initialize
     @values = []
     @max_arr = []
@@ -984,7 +986,23 @@ class Stack
   end
 end
 
-########################################################################
+############################### FIND NONE DUPLICATED INTEGER #########################################
+
+# Given the list of IDs, which contains many duplicate integers and one unique integer, find the unique integer.
+
+def find_none_dup_int(arr)
+  result = arr[0]
+  i = 1
+  while i < arr.length
+    result = result ^ arr[i]
+    i += 1
+  end
+  result
+end
+
+# p find_none_dup_int([3,7,5,3,2,2,5]) #1
+
+
 ########################################################################
 ########################################################################
 ########################################################################
