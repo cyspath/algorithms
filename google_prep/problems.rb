@@ -878,7 +878,19 @@ end
 # Don't make your users watch the same movie twice
 # Optimize for runtime over memory
 
+def flight_movie(time, arr)
+  # 2 sum problem
+end
 
+def nth_fib(n)
+  return [1] if n == 1
+  return [1,1] if n == 2
+  result = nth_fib(n - 1)
+  result.push(result[-1] + result[-2])
+  result
+end
+
+p nth_fib(7)
 ########################################################################
 ########################################################################
 ############################# WONKY COINS ###########################################
