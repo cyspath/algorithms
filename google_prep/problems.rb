@@ -1031,16 +1031,12 @@ def rev_str_words(str)
   while i < r_str.length
     j = i
     while j < r_str.length
-      if r_str[j] == " "
-        r_str[i..j-1] = rev(r_str[i..j-1])
-        i = j
+      if j + 1 >= r_str.length || r_str[j + 1] == " "
+        r_str[i..j] = rev(r_str[i..j])
+        i = j + 1
         break
       end
       j += 1
-    end
-    if j >= r_str.length
-      r_str[i..j] = rev(r_str[i..j])
-      break
     end
     i += 1
   end
@@ -1048,9 +1044,8 @@ def rev_str_words(str)
   r_str
 end
 
-p rev_str_words("today is")
-
-p rev_str_words("today is thursday the 12th")
+# p rev_str_words("today is")
+# p rev_str_words("today is thursday the 12th")
 
 
 ########################################################################
