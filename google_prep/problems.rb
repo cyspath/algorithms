@@ -890,8 +890,40 @@ def nth_fib(n)
   result
 end
 
-p nth_fib(7)
-########################################################################
+# p nth_fib(7)
+
+############################# CAKE PROBLEM - KNAPSACK PROBLEM ###########################################
+
+def max_duffel_bag_value(cake_values, capacity)
+  capacities = (0..capacity).to_a
+  cakes = cake_values.unshift([0,0])
+
+  grid = Array.new(cakes.length).map { |row| Array.new(capacities.length, nil) }
+
+  i = 0
+  while i < cakes.length
+    j = 0
+    while j < capacities.length
+      if i == 0 || j == 0
+        grid[i][j] = 0
+      elsif capacities[j] < cakes[i][0]
+        grid[i][j] = grid[i - 1][j]
+      else
+        remainder = capacities[j] - cakes[i][0]
+        value_above = grid[i - 1][j]
+        value_current = cakes[i][1] + grid[i][remainder]
+        grid[i][j] = [value_current, value_above].max
+      end
+
+      j += 1
+    end
+    i += 1
+  end
+  grid[i - 1][j - 1]
+end
+
+p max_duffel_bag_value([[1,15], [2,90], [4,160]], 6)
+
 ########################################################################
 ############################# WONKY COINS ###########################################
 
