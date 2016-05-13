@@ -1085,9 +1085,109 @@ end
 # p find_closing_parenthesis("(()(()))", 3) #6
 
 
-########################################################################
-########################################################################
-########################################################################
+############################### PROPERLY NESTED STRING OPENERS #########################################
+
+# '(', '{', '[' are called "openers."
+# ')', '}', ']' are called "closers."
+# Write an efficient function that tells us whether or not an input string's openers and closers are properly nested.
+#
+# Examples:
+#
+# "{ [ ] ( ) }" should return True
+# "{ [ ( ] ) }" should return False
+# "{ [ }" should return False
+
+#### USE STACKS
+
+def properly_nested_openers(str)
+  arr = str.split(" ")
+  openers = ['(', '{', '[']
+  closers = [')', '}', ']']
+
+  stack = []
+
+  arr.each do |el|
+    if openers.include?(el)
+      stack.push(el)
+    else
+      i = closers.index(el)
+      return false if stack[-1] != openers[i]
+      stack.pop
+    end
+  end
+  true
+end
+
+# p properly_nested_openers("{ [ ] ( ) }") # t
+# p properly_nested_openers("{ [ ( ] ) }") # f
+# p properly_nested_openers("{ [ }") # f
+
+
+################################## ANY PERMUTATION IS PALINDROME? ######################################
+
+def permutation_palidrome(str)
+  arr = str.split("")
+  hash = {}
+  arr.each { |el| hash[el] ? hash[el] += 1 : hash[el] = 1 }
+  counts = hash.values
+
+  has_odd_val = 0
+  counts.each do |n|
+    if n % 2 != 0
+      has_odd_val += 1
+    end
+  end
+  has_odd_val <= 1 ? true : false
+end
+
+# p permutation_palidrome("abccbba") # true, can be abcbcba
+# p permutation_palidrome("abctcba") # true
+# p permutation_palidrome("abbcba") # false
+
+################################## PERMUTATION ######################################
+
+# GOOD ONE TO SEE
+
+def permutation(str, accum="")
+  return [accum] if str.empty?
+  list = []
+  i = 0
+  while i < str.length
+    new_str = str[0...i] + str[i + 1...str.length]
+    new_accum = accum + str[i]
+    list.concat permutation(new_str, new_accum)
+    i += 1
+  end
+  list
+end
+
+def assign_each_letter_to_str(str, idx, accum)
+  current_accum = accum + str[idx]
+  if idx >= str.length - 1
+    [current_accum]
+  else
+    idx += 1
+    [current_accum].concat(assign_each_letter_to_str(str, idx + 1, accum + str[idx]))
+  end
+end
+
+p assign_each_letter_to_str("abc", 0, "")
+
+# def permutation(str, accum="")
+#   return [accum] if str.empty?
+#   list = []
+#   i = 0
+#   while i < str.length
+#     new_str = str[0...i] + str[i + 1...str.length]
+#     new_accum = accum + str[i]
+#     list.concat permutation(new_str, new_accum)
+#     i += 1
+#   end
+#   list
+# end
+
+p permutation("abc") # arr of 6
+
 ########################################################################
 ########################################################################
 ########################################################################
