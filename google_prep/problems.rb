@@ -1161,35 +1161,56 @@ def permutation(str, accum="")
   list
 end
 
-def assign_each_letter_to_str(str, idx, accum)
-  current_accum = accum + str[idx]
-  if idx >= str.length - 1
-    [current_accum]
-  else
-    idx += 1
-    [current_accum].concat(assign_each_letter_to_str(str, idx + 1, accum + str[idx]))
+# p permutation("abc") # arr of 6
+
+################################# O(max) sorting with min and max #######################################
+
+# Write a function that takes:
+#
+# a list of unsorted_scores
+# the highest_possible_score in the game
+# and returns a sorted list of scores in less than O(nlgn) time.
+
+# MIN MAX SORT O(N) but takes space
+
+def faster_number_sort(arr, max)
+  scores = Array.new(max + 1, 0)
+  arr.each { |n| scores[n] += 1 }
+  result = []
+  scores.each_with_index do |el, idx|
+    el.times do
+      result.push(idx)
+    end
   end
+  result
 end
 
-p assign_each_letter_to_str("abc", 0, "")
+# p faster_number_sort([3,4,3,2,4,3,5,6,7,5,6,7,1,2,8,9,9], 10)
 
-# def permutation(str, accum="")
-#   return [accum] if str.empty?
-#   list = []
-#   i = 0
-#   while i < str.length
-#     new_str = str[0...i] + str[i + 1...str.length]
-#     new_accum = accum + str[i]
-#     list.concat permutation(new_str, new_accum)
-#     i += 1
+########################################################################
+
+# Write a function for doing an in-place ↴ shuffle of a list.
+# The shuffle must be "uniform," meaning each item in the original list must have the same probability of ending up in each spot in the final list.
+#
+# Assume that you have a function get_random(floor, ceiling) for getting a random integer that is >=floor and <=ceiling.
+
+def get_random(low, high)
+  rand(high - low + 1) + low
+end
+
+# def perm(str, accum)
+#   return [accum] if str.length == 0
+#   result = []
+#   str.split("").each_with_index do |letter, idx|
+#     new_str = str[0...idx].concat(str[(idx + 1)...(str.length)])
+#     result.concat(perm(new_str, accum + letter))
 #   end
-#   list
+#   result
 # end
+#
+# p perm("abc", "")
 
-p permutation("abc") # arr of 6
 
-########################################################################
-########################################################################
 ########################################################################
 ########################################################################
 ########################################################################
