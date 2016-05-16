@@ -21,3 +21,17 @@ def test
 end
 
 p test
+
+def rand_7_from_5
+  while true
+    n = 5 * rand(5) + rand(5) # 0..24 equal chance of any
+    return n % 7 if n < 21
+  end
+end
+
+def rand_7_from_2
+  while true
+    n = 4 * rand(2) + 2 * rand(2) + rand(2)
+    return n % 7 if n < 7
+  end
+end
