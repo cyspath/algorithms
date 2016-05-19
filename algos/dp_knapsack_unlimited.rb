@@ -7,21 +7,22 @@
 # Iterate to get to the next level, i.e. objects with weight 2 by using the result from 1
 # For every capacity from 0 to max capacity, try every cake which is less than current capacity and see if we can get a better value including this cake in the optimal set
 
-def knapsack(k, arr) # where arr is a 2d array where first item is weight second item is value
+def knapsack(k, cakes) # where arr is a 2d array where first item is weight second item is value
   capacities = (0..k).to_a
-  arr.unshift([0, 0]) # add 0 weight cake of 0 value to list
+  cakes.unshift([0, 0]) # add 0 weight cake of 0 value to list
 
-  grid = Array.new(arr.length).map { |el| Array.new(capacities.length, 0)}
+  grid = Array.new(cakes.length).map { |el| Array.new(capacities.length, 0)}
 
   grid.each_with_index do |row, i|
     next if i == 0
     row.each_with_index do |el, j|
       next if j == 0
-      current_item_weight = arr[i][0]
+      current_item_weight = cakes[i][0]
       if current_item_weight > capacities[j]
         grid[i][j] = grid[i - 1][j]
       else
-        val_with_current = grid[i][j - current_item_weight] + arr[i][1]
+        # compare (current cake value + max value with current cake but subtract current cake weight) with (max value without current cake at i - 1)
+        val_with_current = grid[i][j - current_item_weight] + cakes[i][1]
         grid[i][j] = [val_with_current, grid[i - 1][j]].max
       end
     end
@@ -30,7 +31,7 @@ def knapsack(k, arr) # where arr is a 2d array where first item is weight second
 end
 
 p knapsack(6, [[2,10], [3,20], [5,30]]) # 40
-p knapsack(50, [[10,60], [20,100], [30,120]]) # 220
+p knapsack(50, [[10,60], [20,100], [30,120]]) # 300
 
 
 ##########
