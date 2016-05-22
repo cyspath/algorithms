@@ -49,14 +49,25 @@ class LRU # O(1) insert, delete, and search
   end
 
   def delete(val)
+    node = @store[val]
+    left = node.prev
+    right = node.right
+    node.prev = nil
+    node.next = nil
+    if left && right
+      left.next = right
+      right.prev = left
+    elsif left
+      left.next = nil
+    elsif right
+      right.prev = nil
+    end
+    @store.delete(val)
   end
 
   def search(val)
+    @store[val]
   end
-
-
-
-
 end
 
 class DoubleLinkedListNode
