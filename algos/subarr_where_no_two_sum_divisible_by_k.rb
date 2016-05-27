@@ -12,7 +12,7 @@ class GNode
   end
 end
 
-def build_graph(k, arr)
+def subarr_not_div_by_k(k, arr)
   return arr.length if k == 1
   pool = {}
   i = 0
@@ -28,9 +28,38 @@ def build_graph(k, arr)
     end
     i += 1
   end
+  count_down(arr.length, pool)
+end
+
+def count_down(size, pool)
+  while true
+    value = find_max_node(pool)
+    break if value.nil?
+    pool = delete_val_from_pool(value, pool)
+    size -= 1
+  end
+  size
+end
+
+def delete_val_from_pool(value, pool)
+  pool[value].links.each do |node, v|
+    pool[node.val].links.delete(pool[value])
+  end
+  pool.delete(value)
   pool
 end
 
+def find_max_node(pool)
+  max = 0
+  value = nil
+  pool.each do |v,k|
+    if k.links.length > max
+      max = k.links.length
+      value = v
+    end
+  end
+  value
+end
 
-
-p build_graph(3, [1,7,2,4]) # 3 ([1,7,4])
+p subarr_not_div_by_k(3, [1,7,2,4]) # 3 ([1,7,4])
+p subarr_not_div_by_k(5, [128, 27, 11, 31, 53, 88]) # 5
