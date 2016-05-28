@@ -106,21 +106,6 @@ rev_in_root.left.left = Node.new(7)
 #               \
 #               3
 
-
-def preorder(node, arr)
-  return if node.nil?
-  arr.push node.val
-  preorder(node.left, arr)
-  preorder(node.right, arr)
-end
-
-def postorder(node)
-  return if node.nil?
-  postorder(node.left)
-  postorder(node.right)
-  $postorder.push node.val
-end
-
 def inorder(node, arr)
   return if node.nil?
   inorder(node.left, arr)
@@ -128,19 +113,13 @@ def inorder(node, arr)
   inorder(node.right, arr)
 end
 
-$preorder = []
-$postorder = []
 $inorder = []
 $rev_inorder = []
-
-# preorder(pre_root)
-# p $preorder
-#
-# postorder(post_root)
-# p $postorder
 
 inorder(in_root, $inorder)
 inorder(rev_in_root, $rev_inorder)
 
 p $inorder
 p $rev_inorder
+
+p $inorder.reverse == $rev_inorder
