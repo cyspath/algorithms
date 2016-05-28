@@ -89,3 +89,37 @@ in_root.right.right = Node.new(7)
 #       /
 #      3
 #
+
+def preorder(node)
+  return if node.nil?
+  $preorder.push node.val
+  preorder(node.left)
+  preorder(node.right)
+end
+
+def postorder(node)
+  return if node.nil?
+  postorder(node.left)
+  postorder(node.right)
+  $postorder.push node.val
+end
+
+def inorder(node)
+  return if node.nil?
+  inorder(node.left)
+  $inorder.push node.val
+  inorder(node.right)
+end
+
+$preorder = []
+$postorder = []
+$inorder = []
+
+preorder(pre_root)
+p $preorder
+
+postorder(post_root)
+p $postorder
+
+inorder(in_root)
+p $inorder
