@@ -114,10 +114,10 @@ def preorder(node, arr)
   preorder(node.right, arr)
 end
 
-def postorder(node)
+def postorder(node, arr)
   return if node.nil?
-  postorder(node.left)
-  postorder(node.right)
+  postorder(node.left, arr)
+  postorder(node.right, arr)
   $postorder.push node.val
 end
 
@@ -133,11 +133,11 @@ $postorder = []
 $inorder = []
 $rev_inorder = []
 
-# preorder(pre_root)
-# p $preorder
-#
-# postorder(post_root)
-# p $postorder
+preorder(pre_root, $preorder)
+p $preorder
+
+postorder(post_root, $postorder)
+p $postorder
 
 inorder(in_root, $inorder)
 inorder(rev_in_root, $rev_inorder)
