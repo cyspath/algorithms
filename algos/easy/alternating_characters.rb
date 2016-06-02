@@ -28,6 +28,29 @@
 # AAABBB  AB, 4 deletions because to convert it to AB we need to delete 2 A's and 2 B's
 
 def alternating_char(str)
-end
+  count = 0
+  current = nil
 
+  i = 0
+  while i < str.length
+    if current.nil?
+      current = str[i]
+    elsif str[i] == current
+      count += 1
+    else
+      current = str[i]
+    end
+    i += 1
+  end
+  count
+end
+p alternating_char("AAAA")
+p alternating_char("BBBBB")
 p alternating_char("ABABABAB")
+p alternating_char("BABABA")
+p alternating_char("AAABBB")
+
+# n = gets.strip.to_i
+#
+# str = []
+# n.times { str.push(gets.strip.split(' ')) }
