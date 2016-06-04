@@ -90,3 +90,30 @@ function printarr(arr) {
 printlvlorder(a)
 
 ///////////////// compare if 2 binary trees are eql /////////////
+
+
+function compare(node1, node2) {
+  if (node1.val != node2.val) { return false }
+
+  if (node1.left && node2.left == undefined) { return false }
+  if (node2.left && node1.left == undefined) { return false }
+  if (node1.right && node2.right == undefined) { return false }
+  if (node2.right && node1.right == undefined) { return false }
+
+  if (node1.left && node2.left ) {
+    var left = compare(node1.left, node2.left)
+  }
+
+  if (node1.right && node2.right ) {
+    var right = compare(node1.right, node2.right)
+  }
+
+  if (left == false || right == false ) {
+    return false
+  } else {
+    return true
+  }
+}
+
+console.log(compare(a, a2)); // true
+console.log(compare(a, b2)); // false
