@@ -87,6 +87,7 @@ function printarr(arr) {
   console.log(result);
 }
 
+console.log();
 printlvlorder(a)
 
 ///////////////// compare if 2 binary trees are eql /////////////
@@ -115,5 +116,49 @@ function compare(node1, node2) {
   }
 }
 
+console.log();
 console.log(compare(a, a2)); // true
 console.log(compare(a, b2)); // false
+
+///////////////// serialize and deserialize tree  /////////////
+
+var serialization = []
+function serialize(node) {
+  serialization.push(node.val)
+
+  if (node.left) {
+    serialize(node.left)
+  } else {
+    serialization.push(undefined)
+  }
+
+  if (node.right) {
+    serialize(node.right)
+  } else {
+    serialization.push(undefined)
+  }
+}
+
+console.log();
+serialize(a)
+console.log(serialization);
+
+var idx = 0
+var root = new Node(serialization[0])
+
+function deserialize(node) {
+  idx += 1
+  if (serialization[idx] != undefined) {
+    node.left = new Node(serialization[idx])
+    deserialize(node.left)
+  }
+  idx += 1
+  if (serialization[idx] != undefined) {
+    node.right = new Node(serialization[idx])
+    deserialize(node.right)
+  }
+  return node
+}
+
+console.log();
+console.log(deserialize(root))
