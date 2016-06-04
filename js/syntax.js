@@ -51,6 +51,9 @@ var arr = ['a', 'b', 'c', 'd']
   b = [3,4]
   a.concat(b)   // [1, 2, 3, 4], a and b still the same old
 
+// deep copy for nested arr
+  // could implement recursive way or use  JSON.parse(JSON.stringify(oldArray))
+  b =  JSON.parse(JSON.stringify(a))
 
 // Hash
   var h = {};
@@ -62,3 +65,20 @@ var arr = ['a', 'b', 'c', 'd']
   h[12] === undefined  // true
   h.hasOwnProperty(12) // false
   delete h[10]         // deletes the key and value with key 10
+
+// Class
+  function Person(firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  Person.prototype.fullName = function() {
+    return this.firstName + " " + this.lastName;
+  }
+
+  var john = new Person("John", "Hud");
+  john.fullName(); // "John Hud"
+
+// Math
+  //  random() method returns a random number from 0 (inclusive) up to but not including 1 (exclusive).
+  Math.floor(Math.random() * 3) + 5 // random from 5-7
