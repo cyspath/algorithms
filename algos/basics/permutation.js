@@ -7,7 +7,6 @@ function permutation(str) {
 
 function recurse(arr, accum, list) {
   if (arr.length == 0) { list.push(accum) }
-
   arr.forEach(function (el, idx) {
     var newArr = arr.slice()
     var newAccum = accum + newArr.splice(idx, 1)
