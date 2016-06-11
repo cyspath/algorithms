@@ -5,16 +5,29 @@
 // successive averages.
 
 function sqrt(n) {
-  var i = 0
-  while(true) {
-    if (i * i > n) break
-    i += 1
+  var result = n/2
+
+  var low = 0
+  var high = n
+
+  var iteration = 0
+  while (iteration <= 100) {
+    if (result * result < n) {
+      low = result
+    } else if (result * result > n) {
+      high = result
+    } else {
+      break
+    }
+    iteration += 1
+    result = avg(low, high)
   }
-  return avg(i, i - 1)
+
+  return result
 }
 
 function avg(a,b) {
   return (a + b)/2
 }
 
-console.log(sqrt(15));
+console.log(sqrt(17));
