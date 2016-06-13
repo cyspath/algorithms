@@ -34,7 +34,7 @@ letterNode.append('d')
 
 
 
-// remove middle node when given only middle node
+////////////////////// remove middle node when given only middle node ////////////////////
 // (make it LOOK LIKE as if u did)
 function removeMid(mid) {
   while (true) {
@@ -54,7 +54,7 @@ function removeMid(mid) {
 
 
 
-// add two numberes represented by linked list
+//////////////////// add two numberes represented by linked list ////////////////////
 function sum(n1, n2) {
   var result = [];
   return arrToNum(toReverseArr(n1)) + arrToNum(toReverseArr(n2));
@@ -86,3 +86,35 @@ n2.append(9)
 n2.append(5)
 
 // console.log(sum(n1, n2)); // 1912
+
+
+
+//////////////////// is palindrome ll? ////////////////////
+// O(1) space
+
+function isPalindrome(n1, n2) {
+  if (n2 === undefined) {
+    return n1;
+  }
+
+  var newN1 = isPalindrome(n1, n2.next);
+
+  if (newN1 === false) { return false } // if the last comparation is false, return false
+  if (newN1.next === undefined) { return true }  // if newN1.next is undef, that means we have reached the end
+
+  return newN1.val === n2.val ? newN1.next : false
+}
+
+var pali = new Node('a')
+pali.append('b').append('c').append('b').append('a')
+
+var pali2 = new Node('a')
+pali2.append('b').append('c').append('c').append('b').append('e')
+
+// console.log(isPalindrome(pali, pali));
+// console.log(isPalindrome(pali2, pali2));
+
+
+////////////////////    ////////////////////
+////////////////////    ////////////////////
+////////////////////    ////////////////////
