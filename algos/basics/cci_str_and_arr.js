@@ -82,3 +82,25 @@ function oneAway(s1,s2) {
 // console.log(oneAway('pales', 'pale'));
 // console.log(oneAway('pale', 'bale'));
 // console.log(oneAway('pale', 'bake'));
+
+function strCompress(str) {
+  var result = "";
+  var current = { letter: undefined, count: 0 }
+  for (i = 0; i < str.length; i ++) {
+    if (current.letter === undefined) {
+      current.letter = str[i], current.count += 1;
+    } else if (current.letter === str[i]) {
+      current.count += 1;
+    } else {
+      result += current.letter;
+      result += parseInt(current.count);
+      current.letter = str[i], current.count = 1;
+    }
+  }
+  result += current.letter;
+  result += parseInt(current.count);
+  return result.length < str.length ? result : str
+}
+
+// console.log(strCompress('aabcccccaaa'));
+// console.log(strCompress('aabbcc'));
