@@ -2,6 +2,7 @@
 // a cube + b cube = c cube + d cube
 
 // O(n^2) runtime
+
 function abcd() {
   var hash = {}
   for (var i = 0; i < 50; i++) {
