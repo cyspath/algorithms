@@ -115,6 +115,43 @@ pali2.append('b').append('c').append('c').append('b').append('e')
 // console.log(isPalindrome(pali2, pali2));
 
 
-////////////////////    ////////////////////
+
+////////////////////  Loop Detection, return the node where it loops  ////////////////////
+
+// two pointer one runs twice as fast, first intersection is start of loop
+// DO NOT KNOW HOW TO RETURN THE NODE
+
+function isLoop(node) {
+  var i = node, j = node;
+  var firstEl = true;
+  while (true) {
+    console.log([i.val, j.val]);
+    if (j.next === undefined) {
+      return false;
+    } else if (i === j && firstEl === false) {
+      return i.val;
+    }
+    i = i.next;
+    j = j.next.next;
+    firstEl = false;
+  }
+}
+
+l1 = new Node(1)
+l1.append(2)
+var l = l1.append(3)
+l1.append(4)
+l1.append(5).next = l
+
+console.log(isLoop(l1));
+
+l1 = new Node(1)
+l1.append(2)
+var l = l1.append(3)
+l1.append(4)
+l1.append(5)
+l1.append(6).next = l
+
+console.log(isLoop(l1));
 ////////////////////    ////////////////////
 ////////////////////    ////////////////////
