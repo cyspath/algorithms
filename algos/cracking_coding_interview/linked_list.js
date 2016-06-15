@@ -122,36 +122,91 @@ pali2.append('b').append('c').append('c').append('b').append('e')
 // DO NOT KNOW HOW TO RETURN THE NODE
 
 function isLoop(node) {
-  var i = node, j = node;
-  var firstEl = true;
+  // find interspection with 2 pointers
+  var i = node, j = node.next;
   while (true) {
-    console.log([i.val, j.val]);
     if (j.next === undefined) {
       return false;
-    } else if (i === j && firstEl === false) {
-      return i.val;
+    } else if (i === j) {
+      break;
     }
     i = i.next;
     j = j.next.next;
-    firstEl = false;
   }
+
+  // find loop size
+  var size = 1;
+  i = i.next;
+  while (i !== j) {
+    size += 1;
+    i = i.next;
+  }
+
+  // using two pointers size distance away, start of loop is where i === j
+  i = node, j = node
+  for (d = 1; d <= size; d++ ) {
+    j = j.next;
+  }
+  while (true) {
+    if (i == j) {
+      return i.val;
+    } else {
+      i = i.next;
+      j = j.next;
+    }
+  }
+
 }
 
-l1 = new Node(1)
+var l = l1 = new Node(1)
 l1.append(2)
-var l = l1.append(3)
+l1.append(3)
 l1.append(4)
-l1.append(5).next = l
+l1.append(5)
+l1.append(6).next = l
+console.log(isLoop(l1)); //1
 
-console.log(isLoop(l1));
+var l1 = new Node(1)
+var l = l1.append(2)
+l1.append(3)
+l1.append(4)
+l1.append(5)
+l1.append(6).next = l
+console.log(isLoop(l1)); //2
 
-l1 = new Node(1)
+
+var l1 = new Node(1)
 l1.append(2)
 var l = l1.append(3)
 l1.append(4)
 l1.append(5)
 l1.append(6).next = l
+console.log(isLoop(l1)); // 3
 
-console.log(isLoop(l1));
+var l1 = new Node(1)
+l1.append(2)
+l1.append(3)
+var l = l1.append(4)
+l1.append(5)
+l1.append(6).next = l
+console.log(isLoop(l1)); // 4
+
+var l1 = new Node(1)
+l1.append(2)
+l1.append(3)
+l1.append(4)
+var l = l1.append(5)
+l1.append(6).next = l
+console.log(isLoop(l1)); // 5
+
+var l1 = new Node(1)
+l1.append(2)
+l1.append(3)
+var l = l1.append(4)
+l1.append(5)
+l1.append(6)
+l1.append(7).next = l
+console.log(isLoop(l1)); // 4
+
 ////////////////////    ////////////////////
 ////////////////////    ////////////////////
