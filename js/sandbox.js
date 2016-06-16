@@ -18,3 +18,11 @@ Pokemon.prototype.attack = function(n = 1) {
 
 // new instance of pokemon
 var p = new Pokemon('Pikachu', 'electric')
+
+// function extend(a,b) {
+//   for (var key in b) {
+//     a[key] = b[key];
+//   }
+//   return a;
+// }
+// console.log(extend({a: 1, c: 3}, {b: 2, c: 4})) // => {a: 1, b: 2, c: 4}
