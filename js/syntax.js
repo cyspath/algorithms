@@ -82,3 +82,13 @@ var arr = ['a', 'b', 'c', 'd']
 // Math
   //  random() method returns a random number from 0 (inclusive) up to but not including 1 (exclusive).
   Math.floor(Math.random() * 3) + 5 // random from 5-7
+
+
+// checks if it is an array
+Array.isArray(a)
+
+// checks if it is an object (remember that null will be object too)
+a !== null && typeof a === 'object'
+
+// object keys
+Object.keys({a: 1, b: 2, c: 3, d: true}) // ["a", "b", "c", "d"]
