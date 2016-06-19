@@ -18,3 +18,6 @@ Queue.prototype.dequeue = function () {
   this.oldIdx ++;
   return result;
 };
+Queue.prototype.isEmpty = function () {
+  this.oldIdx === this.newIdx;
+};
