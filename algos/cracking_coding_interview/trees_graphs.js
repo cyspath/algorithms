@@ -13,7 +13,7 @@ var btObj = { val: 5,
                right: { val: 9 }
              }
           }
-var root = new treeNode(5);
+var root = new treeNode(3);
 root.left = new treeNode(3);
 root.left.left = new treeNode(2);
 root.left.left.left = new treeNode(1);
@@ -119,7 +119,59 @@ function generate2DArrayOfNodes(node) {
   return list;
 }
 
-console.log(generateLinkedListForEachDepth(root));
+// console.log(generateLinkedListForEachDepth(root));
 
+////////////////////  check if bt is balanced  ////////////////////
+
+function isTreeBalanced(node) {   // similar to checking height of bt
+  if (node === undefined) {
+    return 0;
+  }
+  var leftHeight = isTreeBalanced(node.left);
+  var rightHeight = isTreeBalanced(node.right);
+
+  if (leftHeight === false || rightHeight === false) {
+    return false
+  }
+
+  if (Math.abs(leftHeight - rightHeight) > 1) {
+    return false
+  }
+
+  return Math.max(leftHeight, rightHeight) + 1;
+}
+
+// console.log(isTreeBalanced(root)); //4
+
+////////////////////  validate BST  ////////////////////
+
+function validBST(node) {
+  if (node === undefined) {
+    return node;
+  }
+
+  var left = validBST(node.left);
+  var right = validBST(node.right);
+
+  if (left === false || right === false) {
+    return false;
+  }
+  if (left === undefined && right === undefined) {
+    return node;
+  } else if (left === undefined) {
+    return right.val > node.val ? node : false
+  } else if (right === undefined) {
+    return left.val <= node.val ? node : false
+  } else if (left && right) {
+    if (left.val <= node.val && node.val < right.val) {
+      return node;
+    } else {
+      return false;
+    }
+  }
+}
+
+console.log(!!validBST(root));
+////////////////////    ////////////////////
 ////////////////////    ////////////////////
 ////////////////////    ////////////////////
