@@ -1,16 +1,29 @@
-var grid =    [
-  [3, 0, 6, 5, 0, 8, 4, 0, 0],
-  [5, 2, 0, 0, 0, 0, 0, 0, 0],
-  [0, 8, 7, 0, 0, 0, 0, 3, 1],
-  [0, 0, 3, 0, 1, 0, 0, 8, 0],
-  [9, 0, 0, 8, 6, 3, 0, 0, 5],
-  [0, 5, 0, 0, 9, 0, 6, 0, 0],
-  [1, 3, 0, 0, 0, 0, 2, 5, 0],
-  [0, 0, 0, 0, 0, 0, 0, 7, 4],
-  [0, 0, 5, 2, 0, 6, 3, 0, 0]
-];
+var grid = [
+  [0, 0, 0,  0, 0, 3,  0, 2, 0],
+  [0, 0, 0,  6, 2, 0,  1, 0, 0],
+  [0, 0, 2,  1, 0, 0,  0, 8, 0],
+  [0, 0, 5,  0, 1, 0,  0, 0, 8],
+  [0, 0, 0,  0, 8, 0,  0, 4, 5],
+  [0, 3, 0,  0, 5, 0,  0, 0, 2],
+  [3, 0, 4,  2, 0, 7,  0, 5, 0],
+  [0, 0, 0,  0, 0, 1,  4, 0, 7],
+  [0, 1, 0,  4, 0, 0,  0, 3, 9]
+]
+
+// var Answer = [
+//   [7, 5, 1,  8, 4, 3,  9, 2, 6],
+//   [8, 9, 3,  6, 2, 5,  1, 7, 4],
+//   [6, 4, 2,  1, 7, 9,  5, 8, 3],
+//   [4, 2, 5,  3, 1, 6,  7, 9, 8],
+//   [1, 7, 6,  9, 8, 2,  3, 4, 5],
+//   [9, 3, 8,  7, 5, 4,  6, 1, 2],
+//   [3, 6, 4,  2, 9, 7,  8, 5, 1],
+//   [2, 8, 9,  5, 3, 1,  4, 6, 7],
+//   [5, 1, 7,  4, 6, 8,  2, 3, 9]
+// ]
 
 var numbers = [1,2,3,4,5,6,7,8,9]
+var tries = 0
 
 function sudoku(grid) {
   var position = findEmptyBlock(grid);
@@ -19,9 +32,16 @@ function sudoku(grid) {
   }
 
   for (var i = 0; i < numbers.length; i++) {
-
+    grid[position[0]][position[1]] = numbers[i];
+    tries += 1;
+    if (validNumber(position[0], position[1], grid)) {
+      var result = sudoku(grid);
+      if (result !== false) {
+        return grid;
+      }
+    }
   }
-
+  grid[position[0]][position[1]] = 0;
   return false;
 }
 
@@ -43,7 +63,7 @@ function validNumber(i,j,grid) {    // checks horizontal, vertical, then local s
 
   var vertical = [];
   for (var row = 0; row < grid.length; row++) {
-    vertical.push(array[row][j]);
+    vertical.push(grid[row][j]);
   }
   if (validNine(vertical) === false) {
     return false;
@@ -103,3 +123,4 @@ function validNine(arr) { // check if 9 numbers are unique 1-9, allowing multipl
 }
 
 console.log(sudoku(grid));
+console.log(tries.toString() + " numbers of tries");
