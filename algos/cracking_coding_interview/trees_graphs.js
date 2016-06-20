@@ -240,5 +240,54 @@ function nextSuccessor(node) {
 
 // console.log(nextSuccessor(root));
 
+////////////////////  projects and dependencies  ////////////////////
+
+function ProjectNode(val) {
+  this.val = val;
+  this.dependencies = {};
+  this.ready = function() {
+    return Object.keys(this.dependencies).length === 0;
+  }
+}
+function buildHash(arr) {
+  var hash = {};
+  arr.forEach(function (letter) {
+    hash[letter] = new ProjectNode(letter)
+  })
+  return hash;
+}
+function buildOrder(node, orderArr, store) {
+  for (var key in node.dependencies) {
+    if (store[key]) {
+      buildOrder(store[key], orderArr, store)
+    }
+  }
+  if (store[node.val]) {
+    orderArr.push(node.val);
+    delete store[node.val];
+  }
+  return;
+}
+function buildTree(projects, dependencies) {
+  var store = buildHash(projects);
+  dependencies.forEach(function (d) {
+    store[d[0]].dependencies[d[1]] = store[d[1]];
+  })
+
+  var order = [];
+  for (i = 0; i < projects.length; i++) {
+    if (store[projects[i]]) {
+      buildOrder(store[projects[i]], order, store)
+    }
+  }
+  return order;
+}
+
+var projects = ['a','b','c','d','e','f'];
+var dependencies = [['d','a'],['b','f'],['d','b'],['a','f'],['c','d']];
+
+// console.log(buildTree(projects, dependencies));
+
+////////////////////    ////////////////////
 ////////////////////    ////////////////////
 ////////////////////    ////////////////////
