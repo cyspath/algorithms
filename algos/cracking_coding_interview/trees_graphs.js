@@ -13,7 +13,7 @@ var btObj = { val: 5,
                right: { val: 9 }
              }
           }
-var root = new treeNode(3);
+var root = new treeNode(5);
 root.left = new treeNode(3);
 root.left.left = new treeNode(2);
 root.left.left.left = new treeNode(1);
@@ -145,33 +145,49 @@ function isTreeBalanced(node) {   // similar to checking height of bt
 
 ////////////////////  validate BST  ////////////////////
 
+var minMax = [undefined, undefined]
 function validBST(node) {
-  if (node === undefined) {
-    return node;
+  if (node.left === undefined && node.right === undefined) {
+    minMax = [node.val, node.val];
+    return true;
   }
 
-  var left = validBST(node.left);
-  var right = validBST(node.right);
-
-  if (left === false || right === false) {
-    return false;
-  }
-  if (left === undefined && right === undefined) {
-    return node;
-  } else if (left === undefined) {
-    return right.val > node.val ? node : false
-  } else if (right === undefined) {
-    return left.val <= node.val ? node : false
-  } else if (left && right) {
-    if (left.val <= node.val && node.val < right.val) {
-      return node;
-    } else {
+  if (node.left) {
+    var left = validBST(node.left);
+    if (left === false) {
       return false;
     }
+    if (minMax[1] > node.val) {
+      return false;
+    }
+    var min = minMax[0];
   }
+
+  if (node.right) {
+    var right = validBST(node.right);
+    if (right === false) {
+      return false;
+    }
+    if (minMax[0] <= node.val) {
+      return false;
+    }
+    var max = minMax[1];
+  }
+
+  if (node.left === undefined) {
+    var min = node.val;
+  }
+
+  if (node.right === undefined) {
+    var max = node.val;
+  }
+  minMax = [min, max];
+  return true;
 }
 
-console.log(!!validBST(root));
+// console.log(validBST(root));
+// console.log(minMax);
+
 ////////////////////    ////////////////////
 ////////////////////    ////////////////////
 ////////////////////    ////////////////////
