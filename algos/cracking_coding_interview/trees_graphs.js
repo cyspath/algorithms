@@ -2,6 +2,17 @@ function treeNode(val) {
   this.left;
   this.right;
   this.val = val;
+  this.parent;
+}
+treeNode.prototype.addLeft = function(e) {
+  this.left = e;
+  e.parent = this;
+  return e;
+}
+treeNode.prototype.addRight = function(e) {
+  this.right = e;
+  e.parent = this;
+  return e;
 }
 var btObj = { val: 5,
             left: { val: 3,
@@ -14,14 +25,14 @@ var btObj = { val: 5,
              }
           }
 var root = new treeNode(5);
-root.left = new treeNode(3);
-root.left.left = new treeNode(2);
-root.left.left.left = new treeNode(1);
-root.left.right = new treeNode(4);
-root.right = new treeNode(8);
-root.right.left = new treeNode(7);
-root.right.left.left = new treeNode(6);
-root.right.right = new treeNode(9);
+var node3 = root.addLeft(new treeNode(3))
+var node2 = root.left.addLeft(new treeNode(2))
+var node1 = root.left.left.addLeft(new treeNode(1))
+var node4 = root.left.addRight(new treeNode(4))
+var node8 = root.addRight(new treeNode(8))
+var node7 = root.right.addLeft(new treeNode(7))
+var node6 = root.right.left.addLeft(new treeNode(6))
+var node9 = root.right.addRight(new treeNode(9))
 
 //                5
 //            /      \
@@ -145,49 +156,89 @@ function isTreeBalanced(node) {   // similar to checking height of bt
 
 ////////////////////  validate BST  ////////////////////
 
-var minMax = [undefined, undefined]
+var validBSTCurrent;
 function validBST(node) {
-  if (node.left === undefined && node.right === undefined) {
-    minMax = [node.val, node.val];
-    return true;
-  }
-
   if (node.left) {
     var left = validBST(node.left);
-    if (left === false) {
+    if (left === false) return false;
+  }
+
+  if (validBSTCurrent === undefined) {
+    validBSTCurrent = node.val;
+  } else {
+    if (node.val < validBSTCurrent) {
       return false;
     }
-    if (minMax[1] > node.val) {
-      return false;
-    }
-    var min = minMax[0];
+    validBSTCurrent = node.val;
   }
 
   if (node.right) {
     var right = validBST(node.right);
-    if (right === false) {
-      return false;
-    }
-    if (minMax[0] <= node.val) {
-      return false;
-    }
-    var max = minMax[1];
+    if (right === false) return false;
   }
-
-  if (node.left === undefined) {
-    var min = node.val;
-  }
-
-  if (node.right === undefined) {
-    var max = node.val;
-  }
-  minMax = [min, max];
   return true;
 }
 
+// var minMax = [undefined, undefined]
+// function validBST(node) {
+//   if (node.left === undefined && node.right === undefined) {
+//     minMax = [node.val, node.val];
+//     return true;
+//   }
+//
+//   if (node.left) {
+//     var left = validBST(node.left);
+//     if (left === false) {
+//       return false;
+//     }
+//     if (minMax[1] > node.val) {
+//       return false;
+//     }
+//     var min = minMax[0];
+//   }
+//
+//   if (node.right) {
+//     var right = validBST(node.right);
+//     if (right === false) {
+//       return false;
+//     }
+//     if (minMax[0] <= node.val) {
+//       return false;
+//     }
+//     var max = minMax[1];
+//   }
+//
+//   if (node.left === undefined) {
+//     var min = node.val;
+//   }
+//
+//   if (node.right === undefined) {
+//     var max = node.val;
+//   }
+//   minMax = [min, max];
+//   return true;
+// }
+//
 // console.log(validBST(root));
-// console.log(minMax);
+// console.log(validBSTCurrent);
 
-////////////////////    ////////////////////
+////////////////////  next successor in BST  ////////////////////
+
+function nextSuccessor(node) {
+  if (node.right === undefined) {
+    return node.parent;
+  } else if (node.right && node.right.left === undefined) {
+    return node.right;
+  } else {
+    var next = node.right.left;
+    while (next.left !== undefined) {
+      next = next.left;
+    }
+    return next;
+  }
+}
+
+// console.log(nextSuccessor(root));
+
 ////////////////////    ////////////////////
 ////////////////////    ////////////////////
