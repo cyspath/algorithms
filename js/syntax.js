@@ -92,3 +92,9 @@ a !== null && typeof a === 'object'
 
 // object keys
 Object.keys({a: 1, b: 2, c: 3, d: true}) // ["a", "b", "c", "d"]
+
+// creating a 2D matrix grid
+var grid = Array.apply(null, Array(5));
+grid.forEach(function(el, idx) {
+  grid[idx] = Array.apply(null, Array(4));
+})
