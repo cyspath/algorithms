@@ -288,6 +288,46 @@ var dependencies = [['d','a'],['b','f'],['d','b'],['a','f'],['c','d']];
 
 // console.log(buildTree(projects, dependencies));
 
+////////////////////  find most recent ancestor of two nodes  ////////////////////
+
+var ancestor;
+
+function findAncestor(node, arr) {
+  hash = {};
+  arr.forEach(function (el) {
+    hash[el.val] = true
+  })
+
+  recurseFindAncestor(node, hash, arr)
+
+  return ancestor;
+}
+
+function recurseFindAncestor(node, hash, arr) {
+  if (node === undefined) {
+    return [];
+  }
+  if (ancestor !== undefined) {
+    return [];
+  }
+  var left = recurseFindAncestor(node.left, hash, arr);
+  var right = recurseFindAncestor(node.right, hash, arr);
+
+  var children = left.concat(right);
+
+  if (children.length === arr.length) {
+    if (ancestor === undefined) {
+      ancestor = node.val;
+    }
+  }
+
+  var current = hash[node.val] ? [node.val] : []
+  return children.concat(current)
+}
+
+// console.log(findAncestor(root,[node7, node6]));
+
+////////////////////    ////////////////////
 ////////////////////    ////////////////////
 ////////////////////    ////////////////////
 ////////////////////    ////////////////////
