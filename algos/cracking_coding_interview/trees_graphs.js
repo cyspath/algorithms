@@ -34,6 +34,7 @@ var node7 = root.right.addLeft(new treeNode(7))
 var node6 = root.right.left.addLeft(new treeNode(6))
 var node9 = root.right.addRight(new treeNode(9))
 
+
 //                5
 //            /      \
 //         3             8
@@ -327,7 +328,105 @@ function recurseFindAncestor(node, hash, arr) {
 
 // console.log(findAncestor(root,[node7, node6]));
 
-////////////////////    ////////////////////
-////////////////////    ////////////////////
+////////////////////  find all posible array for making a BST  ////////////////////
+
+var bstSeqArr = [];
+function bstSeq(node) {
+  if (node.left === undefined && node.right === undefined) {
+    return [node.val];
+  } else if (node.left && node.right) {
+    var left = bstSeq(node.left);
+    var right = bstSeq(node.right);
+  } else if (node.left) {
+    var left = bstSeq(node.left);
+    var right = [];
+  } else {
+    var left = [];
+    var right = bstSeq(node.right);
+  }
+
+  var newLeft = [];
+  left.forEach(function (l) {
+    right.forEach(function (r) {
+      newLeft.push(l + r)
+    })
+  })
+
+  var newRight = [];
+  right.forEach(function (r) {
+    left.forEach(function (l) {
+      newRight.push(r + l)
+    })
+  })
+
+  return newLeft.concat(newRight).map(function (str) {
+    return node.val + str;
+  })
+}
+
+var root2 = new treeNode('A');
+root2.addLeft(new treeNode('B'))
+root2.left.addLeft(new treeNode('D'))
+root2.left.addRight(new treeNode('E'))
+root2.addRight(new treeNode('C'))
+// root2.right.addLeft(new treeNode('F'))
+// root2.right.addRight(new treeNode('G'))
+
+// console.log(bstSeq(root2));
+
+////////////////////  t2 is a subtree of t1  ////////////////////
+
+function subtree(n1,n2) {
+  if (n1 === undefined) {
+    return false;
+  }
+  if (n1.val === n2.val) {
+    var match = compareTrees(n1,n2);
+    return match ? true : false
+  }
+  var left = subtree(n1.left, n2);
+  if (left) {
+    return true;
+  }
+  var right = subtree(n1.right, n2);
+  if (right) {
+    return true;
+  }
+  return false;
+}
+
+function compareTrees(n1,n2) {
+  if (n1 === undefined && n1 === undefined) {
+    return true;
+  } else if (n1 === undefined && n2) {
+    return false;
+  } else if (n1 && n2 === undefined) {
+    return false;
+  }
+
+  if (n1.val !== n2.val) {
+    return false;
+  }
+
+  var left = compareTrees(n1.left, n2.left);
+  if (left === false) {
+    return false;
+  }
+
+  var right = compareTrees(n1.right, n2.right);
+  if (right === false) {
+    return false;
+  }
+
+  return true;
+}
+// 
+// var root3 = new treeNode(3);
+// root3.addLeft(new treeNode(2))
+// root3.left.addLeft(new treeNode(1))
+// root3.addRight(new treeNode(4))
+//
+// console.log(subtree(root, root3));
+
 ////////////////////    ////////////////////
 ////////////////////    ////////////////////
