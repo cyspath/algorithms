@@ -5,7 +5,6 @@ function pow(n) {
     return 1
   } else {
     var half = pow(Math.floor(n/2))
-    console.log(half);
     return half * half * pow(n - Math.floor(n/2) * 2)
   }
 }
