@@ -98,3 +98,5 @@ var grid = Array.apply(null, Array(5));
 grid.forEach(function(el, idx) {
   grid[idx] = Array.apply(null, Array(4));
 })
+
+// BECAREFUL THAT 0 is FALSEY IN JAVASCRIPT!!!!
