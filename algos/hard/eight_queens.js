@@ -9,7 +9,7 @@ function eightQueens(row, grid) {
         result.push(newGrid)
       }
     }
-    return result // result.length > 1 ? result : false;
+    return result
   }
 
 
@@ -18,18 +18,16 @@ function eightQueens(row, grid) {
     if (validPos(row, j, newGrid)) {
       newGrid[row][j] = 'Q';
       var gridList = eightQueens(row + 1, newGrid);
-      if (gridList) {
-        result = result.concat(gridList);
-      }
+      result = result.concat(gridList);
     }
   }
-  return result //result.length > 1 ? result : false;
+  return result
 }
 
 var ans = eightQueens(0, genGrid());
-ans.forEach(function (grid) {
-  print(grid)
-})
+// ans.forEach(function (grid) {
+//   print(grid)
+// })
 console.log(ans.length + ' ways for 8 queens');
 
 function validPos(row, col, grid) {
@@ -111,30 +109,6 @@ function validDiagonal(row,col,grid) {
   return true;
 }
 
-function deleteThree(idx, arr) {
-  var result = [];
-  for (var i = 0; i < arr.length; i++) {
-    if (arr[i] === idx - 1 || arr[i] === idx || arr[i] === idx + 1) {
-      continue;
-    } else {
-      result.push(arr[i]);
-    }
-  }
-  return result;
-}
-
-function deleteEl(idx, arr) {
-  var result = [];
-  for (var i = 0; i < arr.length; i++) {
-    if (arr[i] === idx) {
-      continue;
-    } else {
-      result.push(arr[i]);
-    }
-  }
-  return result;
-}
-
 function copyGrid(grid) {
   var newGrid = genGrid();
   for (var i = 0; i < grid.length; i++) {
@@ -163,7 +137,7 @@ function print(g) {
   for (var i = 0; i < grid.length; i++) {
     for (var j = 0; j < grid[i].length; j++) {
       if (grid[i][j] == 0) {
-        grid[i][j] = " "
+        grid[i][j] = "_"
       }
     }
   }
