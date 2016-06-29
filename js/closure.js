@@ -44,6 +44,6 @@ myLocation.get();           // output: Sydney
 
 // Here cityLocation() returns an object containing two closures – get() and set() – and they both refer to the outer variable city. get() obtains the current value of city, while set() updates it. When myLocation.get() is called for the second time, it outputs the updated (current) value of city – “Sydney” – rather than the default “Paris”.
 
-// This means that closures store references to their outer variables, rather than copying their values. 
+// This means that closures store references to their outer variables, rather than copying their values.
 
 ////////////////////////////////////////////////////////
