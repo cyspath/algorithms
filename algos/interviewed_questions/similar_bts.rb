@@ -2,7 +2,7 @@
 # and also they are the same if childrens are swapped.
 #
 # given root nodes of two binary trees, check if they are similar or not
-# 
+#
 # for example:
 #
 # similar trees:
