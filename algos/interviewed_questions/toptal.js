@@ -1,3 +1,21 @@
+// TASK NO.	
+// TASK TOTAL SCORE
+// CORRECTNESS
+// PERFORMANCE
+// AGGREGATED TOTAL SCORE
+// Task 1
+// 62%
+// 80%
+// 33%
+// Task 2
+// 41%
+// 71%
+// 0%
+// Task 3
+// 80%
+// 100%
+// 50%
+
 // Find number of pair combinations in an array
 // [3, 5, 6, 3, 3, 5] should give 4 because:
 // 4 indexes => [0, 3], [0,4], [3,4], and [1,5] are pairs
@@ -73,6 +91,9 @@ console.log(transformString('ABBB')); //A
 
 
 // find bitwise XOR product of range M to N, where M <= N
+// example 5 and 8 gives 12,
+// because 5 XOR 6 XOR 7 XOR 8 gives 101,110,111,1000
+
 // expects O(n) time, O(1) space
 
 function toBinary(n) {
