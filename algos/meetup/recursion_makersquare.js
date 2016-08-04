@@ -1,4 +1,4 @@
-// console.log(genArr(5))
+//// console.log(genArr(5))
 
 // input number of rounds
 // output is array all possible rock paper scissors combs
