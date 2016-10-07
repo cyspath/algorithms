@@ -59,5 +59,53 @@ function evenMatch(idx, str) {
 
 // console.log(oddMatch(1, 'aracecar')); // 3
 // console.log(evenMatch(4, 'araceecar')); // 8
-console.log(longestPalindrome('aracecarora'));
-console.log(longestPalindrome('arttttracewecarora')); //racewecar
+// console.log(longestPalindrome('aracecarora'));
+// console.log(longestPalindrome('arttttracewecarora')); //racewecar
+
+// Second try
+function length(arr) {
+  return arr[1] - arr[0] + 1;
+}
+
+function oddAndEvenCheck(str, idx) {
+  var odd = paliCheck(str, idx, idx), even = paliCheck(str, idx, idx + 1)
+  return length(odd) > length(even) ? odd : even;
+}
+
+function paliCheck(str, i, j) {
+  while (i >= 0 && j < str.length) {
+    if (str[i] !== str[j]) {
+      return [i + 1, j - 1];
+    }
+    i -= 1;
+    j += 1;
+  }
+  return [i + 1, j - 1]
+}
+
+function longestPali(str) {
+  if (str.length === 0) {
+    return str;
+  }
+  var max = 0, idxs, current;
+  for (var i = 0; i < str.length; i++) {
+    current = oddAndEvenCheck(str, i);
+    if (length(current) > max) {
+      max = length(current);
+      idxs = current;
+    }
+  }
+  return str.slice(idxs[0], idxs[1] + 1);
+}
+
+console.log(longestPali("e"));
+console.log(longestPali("baaaa"));
+console.log(longestPali("My dad is a racecar athlete"));
+// console.log(length(oddAndEvenCheck("a", 0))); // 1
+// console.log(length(oddAndEvenCheck("aba", 0))); // 1
+// console.log(length(oddAndEvenCheck("aba", 1))); // 3
+// console.log(length(oddAndEvenCheck("cabac", 2))); // 5
+// console.log(length(oddAndEvenCheck("fcabac", 3))); // 5
+// console.log(length(oddAndEvenCheck("fcabac", 2))); // 1
+// console.log(length(oddAndEvenCheck("fgggg", 2))); // 4
+// console.log(length(oddAndEvenCheck("fggggf", 3))); // 3
