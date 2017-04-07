@@ -225,6 +225,21 @@ var zMatrix = [
 console.log(zeroMatrix(zMatrix));
 
 function zeroMatrix(arr) {
+  // determine first row and/or col should be zeros in the end
+  var firstRowZero = false, firstColZero = false;
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i][0] === 0) {
+      firstColZero = true;
+      break;
+    }
+  }
+  for (var j = 0; j < arr[0].length; j++) {
+    if (arr[0][j] === 0) {
+      firstRowZero = true;
+    }
+  }
+
+  // record the i and j on the first row and col where should be zeros
   for (var i = 0; i < arr.length; i++) {
     for (var j = 0; j < arr[i].length; j++) {
       if (arr[i][j] === 0) {
@@ -233,22 +248,30 @@ function zeroMatrix(arr) {
       }
     }
   }
-  for (var i = 0; i < arr.length; i++) {
+  for (var i = 1; i < arr.length; i++) {
     if (arr[i][0] === true) {
       // mark entire row 0's unless it is a true (first row)
       for (var j = 0; j < arr[i].length; j++) {
-        if (arr[i][j] !== true) {
-          arr[i][j] = 0;
-        }
+        arr[i][j] = 0;
       }
     }
   }
-  for (var j = 0; j < arr[0].length; j++) {
+  for (var j = 1; j < arr[0].length; j++) {
     if (arr[0][j] === true) {
       // mark entire column 0's
       for (var i = 0; i < arr.length; i++) {
         arr[i][j] = 0;
       }
+    }
+  }
+  if (firstRowZero) {
+    for (var j = 0; j < arr[0].length; j++) {
+      arr[0][j] = 0;
+    }
+  }
+  if (firstColZero) {
+    for (var i = 0; i < arr.length; i++) {
+      arr[i][0] = 0;
     }
   }
   return arr;
