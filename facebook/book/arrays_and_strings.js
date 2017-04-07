@@ -101,12 +101,12 @@ function isPermutationPalindrome(str) {
 
 // one away - insert, remove, or replace 1 character... given 2 strs check if 1 edit away
 // O(shorter str length) O(1)
-console.log(oneAway('pale', 'ple')); // t
-console.log(oneAway('apale', 'pale')); // t
-console.log(oneAway('bale', 'pale')); // t
-console.log(oneAway('pale', 'bake')); // f
-console.log(oneAway('b', 'c')); // t
-console.log(oneAway('abc', 'accb')); // f
+// console.log(oneAway('pale', 'ple')); // t
+// console.log(oneAway('apale', 'pale')); // t
+// console.log(oneAway('bale', 'pale')); // t
+// console.log(oneAway('pale', 'bake')); // f
+// console.log(oneAway('b', 'c')); // t
+// console.log(oneAway('abc', 'accb')); // f
 
 function oneAway(a, b) {
   if (Math.abs(a - b) > 1) return false;
@@ -144,4 +144,112 @@ function oneAway(a, b) {
   }
   return count > 1 ? false : true;
 
+}
+
+// string compression
+// O(n) O(n)
+
+// console.log(strCompression('aabcccccaaa')); // a2b1c5a3
+// console.log(strCompression('a')); // a
+// console.log(strCompression('')); // ''
+
+function strCompression(str) {
+  if (str.length === 0) {
+    return str;
+  }
+  var currentLetter = "", result = "", count = 0;
+  for (var i = 0; i < str.length; i++) {
+    if (currentLetter === "") {
+      currentLetter = str[i];
+      count = 1;
+    } else if (currentLetter === str[i]) {
+      count ++;
+    } else {
+      result += currentLetter;
+      result += count.toString();
+      currentLetter = str[i];
+      count = 1;
+    }
+  }
+  result += currentLetter;
+  result += count.toString();
+  return str.length > result.length ? result : str;
+}
+
+// rotate matrix - square matrix
+var sqMatrix = [
+  [1,2,3,4],
+  [5,6,7,8],
+  [9,10,11,12],
+  [13,14,15,16]
+]
+
+// console.log(rotateMatrix(sqMatrix));
+// O(n^2) O(n^2)
+
+// 7 4 1
+// 8 5 2
+// 9 6 3
+
+// logic first... swap i, j to give this
+// 1 4 7
+// 2 5 8
+// 3 6 9
+// next reverse each row
+function rotateMatrix(arr) {
+  // genereate new array with all undefined
+  var result = new Array(arr.length)
+  for (var i = 0; i < result.length; i++) {
+    result[i] = new Array(arr.length)
+  }
+  // swap i and j position for new arr
+  for (var i = 0; i < arr.length; i++) {
+    for (var j = 0; j < arr[i].length; j++) {
+      result[j][i] = arr[i][j];
+    }
+  }
+  // reverse each row
+  for (var i = 0; i < result.length; i++) {
+    result[i] = result[i].reverse();
+  }
+  return result;
+}
+
+// zero matrix - if element in MxN matrix == 0, entire row and column are set to 0
+// O(M*N) O(1)
+var zMatrix = [
+  [1,1,0,1],
+  [1,0,1,1],
+  [1,1,1,1]
+]
+console.log(zeroMatrix(zMatrix));
+
+function zeroMatrix(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    for (var j = 0; j < arr[i].length; j++) {
+      if (arr[i][j] === 0) {
+        arr[i][0] = true;
+        arr[0][j] = true;
+      }
+    }
+  }
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i][0] === true) {
+      // mark entire row 0's unless it is a true (first row)
+      for (var j = 0; j < arr[i].length; j++) {
+        if (arr[i][j] !== true) {
+          arr[i][j] = 0;
+        }
+      }
+    }
+  }
+  for (var j = 0; j < arr[0].length; j++) {
+    if (arr[0][j] === true) {
+      // mark entire column 0's
+      for (var i = 0; i < arr.length; i++) {
+        arr[i][j] = 0;
+      }
+    }
+  }
+  return arr;
 }
