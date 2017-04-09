@@ -222,7 +222,7 @@ var zMatrix = [
   [1,0,1,1],
   [1,1,1,1]
 ]
-console.log(zeroMatrix(zMatrix));
+// console.log(zeroMatrix(zMatrix));
 
 function zeroMatrix(arr) {
   // determine first row and/or col should be zeros in the end
@@ -275,4 +275,13 @@ function zeroMatrix(arr) {
     }
   }
   return arr;
+}
+
+// string rotation - you have method #includes(str) which can be called only once
+// O(#includes) O(1)
+// console.log(strRotation('waterbottle', 'erbottlewat')); // true
+
+function strRotation(s1, s2) {
+  var concated = s2 + s2;
+  return concated.includes(s1);
 }
