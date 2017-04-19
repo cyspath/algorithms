@@ -97,3 +97,38 @@ function isBalanced(node) {
 }
 
 // console.log(isBalanced(root));
+
+function validateBST(node) {
+  if (!node) return true; // no node here
+
+  var left = validateBST(node.left);
+  var right = validateBST(node.right);
+
+  if (!left || !right) {
+    return false;
+  }
+  if (left && left != true && node.val < left) {
+    return false;
+  }
+  if (right && right != true && node.val >= right) {
+    return false;
+  }
+  return node.val;
+}
+
+// console.log(validateBST(root));
+
+
+function nextNode(node) {
+  if (node.right) {
+    return leftMostOrSelf(node.right);
+  } else {
+    return node.parent.val >= node.val ? node.parent : null;
+  }
+}
+function leftMostOrSelf(node) {
+  if (node.left) {
+    return leftMostOrSelf(node.left);
+  }
+  return node;
+}
