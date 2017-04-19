@@ -132,3 +132,177 @@ function leftMostOrSelf(node) {
   }
   return node;
 }
+
+
+// build order - find a build order for list a projects, and their dependencies where first one depends on second
+var projects = 'abcdef'.split('');
+var dependencies = [
+  ['d','a'],
+  ['b','f'],
+  ['d','b'],
+  ['a','f'],
+  ['c','d'],
+  // ['f','c'] // circurlar code test
+]
+
+class GraphNode {
+  constructor(val = null) {
+    this.val = val;
+    this.children = [];
+  }
+}
+
+class LinkedListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+  showValues() {
+    let values = [];
+    let node = this;
+    while (node.next) {
+      values.push(node.val);
+      node = node.next;
+    }
+    values.push(node.val);
+    return values.join(' -> ')
+  }
+}
+
+class Queue {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+  }
+  add(el) {
+    var newNode = new LinkedListNode(el);
+    if (!this.head || !this.tail) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      this.tail.next = newNode;
+      this.tail = newNode;
+    }
+    return el;
+  }
+  remove() {
+    if (!this.head) {
+      return;
+    } else {
+      var node = this.head;
+      this.head = node.next;
+      node.next = null;
+      if (!this.head) {
+        this.tail = null;
+      }
+      return node.val;
+    }
+  }
+  isEmpty() {
+    return !this.head && !this.tail;
+  }
+}
+
+function buildOrder(p, d) {
+  // initiate a hash with all the projects, set the default root = true for each
+  var hash = toHash(p);
+  // set childrens, and toggle the projects that depends on others to be root = false
+  setChildren(hash, d); // only 2 nodes are roots now
+  // find the nodes, go through each and add to result
+  var result = [];
+  for (var key in hash) {
+    if (hash[key].root) {
+      addToResult(result, hash[key]);
+    }
+  }
+  console.log(hash);
+  return result.length == p.length ? result : 'error'; // circular dependencies ends up error
+}
+
+function toHash(p) {
+  var hash = {};
+  for (var i = 0; i < p.length; i++) {
+    var node = new GraphNode(p[i]);
+    node.root = true;
+    hash[p[i]] = node;
+  }
+  return hash;
+}
+
+function setChildren(hash, d) {
+  for (var i = 0; i < d.length; i++) {
+    hash[d[i][0]].root = false;
+    hash[d[i][0]].visited = false;
+    hash[d[i][1]].children.push(hash[d[i][0]]);
+  }
+  return hash;
+}
+
+function addToResult(result, node) {
+  var queue = new Queue();
+  queue.add(node);
+  node.visited = true;
+  while (!queue.isEmpty()) {
+    var current = queue.remove();
+    result.push(current.val);
+    for (var i = 0; i < current.children.length; i++) {
+      var child = current.children[i];
+      if (!child.visited) {
+        child.visited = true;
+        queue.add(child);
+      }
+    }
+  }
+  return result;
+}
+
+// console.log(buildOrder(projects, dependencies));
+
+
+// first common ancestor in binary tree
+function commonAncestor(node, n1, n2) {
+  var result = null;
+
+  function recurse(node) {
+    if (!node) {
+      return 0;
+    }
+    var left = recurse(node.left);
+    var right = recurse(node.right);
+
+    if (left === true || right === true) {
+      // done, found
+      return true;
+    }
+
+    if (left + right == 2 && !result) {
+      result = node.val;
+      return true;
+    }
+
+    if (node === n1 || node === n2) {
+      return left + right + 1;
+    }
+    return left + right;
+  }
+
+  recurse(node);
+
+  return result;
+}
+
+// var a = new Node('a')
+// var b = new Node('b')
+// var c = new Node('c')
+// a.left = b
+// a.right = c
+// var d = new Node('d')
+// var e = new Node('e')
+// var f = new Node('f')
+// var g = new Node('g')
+// b.right = d
+// c.left = e
+// c.left.left = f
+// c.right = g
+// // console.log(a);
+// console.log(commonAncestor(a, e, g));
