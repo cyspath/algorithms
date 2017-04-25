@@ -306,3 +306,58 @@ function commonAncestor(node, n1, n2) {
 // c.right = g
 // // console.log(a);
 // console.log(commonAncestor(a, e, g));
+
+
+// find number of paths that adds to a specific sum
+var sumNode = {
+  val: 10,
+  left: {
+    val: 5,
+    left: { val: 3, left: { val: 3 }, right: { val: -2 } },
+    right: { val: 1, right: { val: 2 } }
+  },
+  right: {
+    val: -3,
+    right: { val: 11 }
+  }
+}
+//         10
+//       /    \
+//      5      -3
+//    /   \      \
+//   3     1      11
+//  / \     \
+// 3   2     2
+
+function numPaths(node, targetSum) {
+  var result = 0;
+
+  function recurse(node, hash, runningSum) {
+    if (!node) {
+      return 0;
+    }
+    runningSum += node.val;
+
+    if (hash[runningSum]) {
+      hash[runningSum] += 1;
+    } else {
+      hash[runningSum] = 1;
+    }
+
+    if (hash[runningSum - targetSum]) {
+      result += 1;
+    }
+
+    if (node.left) {
+      recurse(node.left, hash, runningSum);
+    }
+    if (node.right) {
+      recurse(node.right, Object.assign({}, hash), runningSum);
+    }
+  }
+
+  recurse(node, {}, 0)
+  return result;
+}
+
+console.log(numPaths(sumNode, 6)); // 3
