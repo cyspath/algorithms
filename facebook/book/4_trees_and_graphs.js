@@ -306,3 +306,62 @@ function commonAncestor(node, n1, n2) {
 // c.right = g
 // // console.log(a);
 // console.log(commonAncestor(a, e, g));
+
+// check subtree, where t1 is much larger than t2
+
+function subtree(n1, n2) {
+  var queue = new Queue();
+  queue.add(n1);
+  var n1Node;
+  while (!queue.isEmpty()) {
+    var current = queue.remove();
+    if (current === n2) {
+      n1Node = current;
+      break;
+    }
+    if (current.left) {
+      queue.add(current.left);
+    }
+    if (current.right) {
+      queue.add(current.right);
+    }
+  }
+  if (n1Node) {
+    return equal(n1Node, n2)
+  } else {
+    return false;
+  }
+}
+
+function equal(n1, n2) {
+  var result = true;
+  function recurse(n1, n2) {
+    if (n1 != n2) {
+      return result = false;
+    }
+    if (n1.left && n2.left) {
+      recurse(n1.left, n2.left);
+    }
+    if (n1.right && n2.right) {
+      recurse(n1.right, n2.right);
+    }
+  }
+  recurse(n1, n2);
+  return result;
+}
+
+// var a = new Node('a')
+// var b = new Node('b')
+// var c = new Node('c')
+// a.left = b
+// a.right = c
+// var d = new Node('d')
+// var e = new Node('e')
+// var f = new Node('f')
+// var g = new Node('g')
+// b.right = d
+// c.left = e
+// c.left.left = f
+// c.right = g
+//
+// console.log(subtree(b, c));
