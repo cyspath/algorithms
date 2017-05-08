@@ -458,7 +458,38 @@ function binaryToInt(str) {
 
 // ////////////////////////////// RECURSION AND DP ////////////////////////////////////
 
-// magic index where a[i] = i
+// triple step, a child is running up staircase with n steps and can hop either 1 step, 2 steps, or 3 steps at a time. count how many possible ways the child can run the stairs.
+
+function tripleStep(n) {
+  var hash = {};
+
+  function recurse(n) {
+    if (n < 0) {
+      return 0;
+    } else if (n == 0) {
+      return 1;
+    }
+
+    var result = 0;
+    for (var step = 1; step <= 3; step++) {
+      if (!hash[n - step]) {
+        hash[n - step] = recurse(n - step);
+      }
+      result += hash[n - step];
+    }
+    return result;
+  }
+  return recurse(n);
+}
+
+// console.log(tripleStep(1));
+// console.log(tripleStep(2));
+// console.log(tripleStep(3));
+// console.log(tripleStep(4));
+// console.log(tripleStep(5));
+
+
+// ///////////////// magic index where a[i] = i
 function magicIdx(a) {
   function recurse(a, i1, i2) {
     if (i2 < i1) return -1;
