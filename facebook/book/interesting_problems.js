@@ -458,6 +458,32 @@ function binaryToInt(str) {
 
 // ////////////////////////////// RECURSION AND DP ////////////////////////////////////
 
+// magic index where a[i] = i
+function magicIdx(a) {
+  function recurse(a, i1, i2) {
+    if (i2 < i1) return -1;
+    // find mid index and return index if mid is correct
+    var midIdx = Math.floor((i1 + i2)/2);
+    if (a[midIdx] == midIdx) {
+      return midIdx;
+    }
+    // search left up to a[midIdx]
+    var leftIdx = Math.min(a[midIdx], midIdx - 1);
+    var left = recurse(a, 0, leftIdx);
+    if (left >= 0) {
+      return left;
+    }
+    // search right
+    var rightIdx = Math.max(a[midIdx], midIdx + 1);
+    var right = recurse(a, rightIdx, i2);
+    return right;
+  }
+  return recurse(a, 0, a.length - 1)
+}
+
+// console.log(magicIdx([1,2,2,4,4,5,6])); // 4
+
+
 // ////////////////////////////// SYSTEM DESIGN AND SCALABILTY ////////////////////////////////////
 
 // ////////////////////////////// SORTING AND SEARCHING ////////////////////////////////////
