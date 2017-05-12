@@ -165,3 +165,124 @@ function multiply(a,b) {
   return sum;
 }
 // multiply(3, 20)
+
+
+// string of length L has L! permutations
+// n * n!
+function permutationNoDup(str) {
+  if (str.length <= 0) {
+    return [str];
+  }
+  var result = [];
+  for (var i = 0; i < str.length; i++) {
+    var newStr = str.slice(0, i) + str.slice(i + 1);
+    var arr = permutationNoDup(newStr);
+    for (var j = 0; j < arr.length; j++) {
+      result.push(str[i] + arr[j]);
+    }
+  }
+  return result;
+}
+
+// console.log(permutationNoDup('abcd'));
+
+function permutationWithDup(str) {
+  if (str.length === 0) return [str];
+  var result = [], store = {};
+  for (var i = 0; i < str.length; i++) {
+    if (!store[str[i]]) {
+      store[str[i]] = true;
+      var newStr = str.slice(0, i) + str.slice(i + 1);
+      var arr = permutationWithDup(newStr);
+      for (var j = 0; j < arr.length; j++) {
+        result.push(str[i] + arr[j]);
+      }
+    }
+  }
+  return result;
+}
+
+// console.log(permutationWithDup('aabc'));
+
+// find all correct permutations of n parentheses
+// O(n^2)
+function parenthesis(n) {
+  var result = [];
+  function recurse(str, left, right) {
+    if (left > right || left < 0) {
+      return;
+    }
+    if (left === 0 && right === 0) {
+      return result.push(str);
+    }
+    if (left > 0) {
+      recurse(str + '(', left - 1, right);
+    }
+    if (right > 0) {
+      recurse(str + ')', left, right - 1);
+    }
+  }
+  recurse('', n, n);
+  return result;
+}
+
+// console.log(parenthesis(4));
+
+
+// paint fill program for a matrix (like in mspaint)
+function paintFill(grid, row, col) {
+  function recurse(row, col) {
+    if (!grid[row] || !grid[row][col] || grid[row][col] !== ' ') {
+      return;
+    } else {
+      grid[row][col] = '*';
+      recurse(row - 1, col);
+      recurse(row + 1, col);
+      recurse(row, col + 1);
+      recurse(row, col - 1);
+    }
+  }
+  recurse(row, col);
+  return grid
+}
+// var grid = [
+//   [' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', ],
+//   [' ', ' ', '*', ' ', '*', ' ', ' ', ' ', ],
+//   [' ', '*', '0', ' ', ' ', '*', ' ', ' ', ],
+//   [' ', '*', ' ', ' ', ' ', '*', ' ', ' ', ],
+//   [' ', ' ', '*', ' ', ' ', '*', ' ', ' ', ],
+//   [' ', ' ', ' ', '*', ' ', '*', ' ', ' ', ],
+//   [' ', ' ', ' ', '*', ' ', '*', ' ', ' ', ],
+//   [' ', ' ', ' ', '*', ' ', '*', ' ', ' ', ]
+// ]
+// console.log(paintFill(grid, 3, 3));
+
+
+// ways of giving change of n cents by using american coins 25, 10, 5, and 1
+// to solve, make matrix, top is ways to make using previous coin types, if current total value is >= current coin, use top + difference in value of current coin
+// O(value * coins)
+function coinChange(value, coins) {
+  var grid = new Array(coins.length + 1);
+  for (var i = 0; i < grid.length; i++) {
+    grid[i] = [];
+    for (var j = 0; j <= value; j++) {
+      grid[i].push(0)
+    }
+  }
+  for (var i = 1; i < grid.length; i++) {
+    for (var j = 0; j < grid[i].length; j++) {
+      var top = grid[i - 1][j];
+      if (j === 0) {
+        grid[i][j] = 1;
+      } else if (j >= coins[i - 1]) {
+        grid[i][j] = grid[i][j - coins[i - 1]] + top;
+      } else {
+        grid[i][j] = top;
+      }
+    }
+  }
+  console.log(grid);
+  return grid[i - 1][j - 1]
+}
+
+// console.log(coinChange(25, [1,5,10,25]));
