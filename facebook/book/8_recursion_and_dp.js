@@ -286,3 +286,34 @@ function coinChange(value, coins) {
 }
 
 // console.log(coinChange(25, [1,5,10,25]));
+
+
+// Tower of hanoi
+
+function toh(n) {
+  var a = [], b = [], c = [];
+  for (var i = n; i >= 1; i--) {
+    a.push(i)
+  }
+
+  function recurse(n, from, use, to) {
+    // console.log(a, b, c);
+    if (n === 0) {
+      return
+    }
+    recurse(n - 1, from, to, use);
+    // move current/base to toTower
+    var peg = from.pop();
+    to.push(peg);
+    console.log('movin', peg);
+    console.log(a, b, c);
+    // move top pegs to toTower
+    recurse(n - 1, use, from, to);
+
+  }
+  console.log(a, b, c);
+  recurse(n, a, b, c)
+  return [a,b,c]
+}
+
+console.log(toh(4));
