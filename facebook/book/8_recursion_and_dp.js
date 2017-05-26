@@ -316,4 +316,4 @@ function toh(n) {
   return [a,b,c]
 }
 
-console.log(toh(4));
+// console.log(toh(4));
