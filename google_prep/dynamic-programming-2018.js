@@ -1,4 +1,6 @@
+// *****************************************************
 // LONGEST COMMON SUB-SEQUENCE
+// *****************************************************
 
 //           f(32)            base case 1 is if one index is -1, return 0
 //         /       \          base case 2 is if both last elements are same, return 1 and recurse both with one less
@@ -30,7 +32,9 @@ var lcs = function (a,b) { // with memorization its O(ab) instead of O(2^(a+b))
 // console.log(lcs(a, b)); // 4
 
 
+// *****************************************************
 // LONGEST INCREASING SUB-SEQUENCE
+// *****************************************************
 
 //             f(3)           where things are memoized, its O(n^2)
 //          /    |   \        is n + n-1 + n-2 ... 1
@@ -64,7 +68,11 @@ var lis = function (arr) { // O(n^2) soln, nlogn available via bsearch not dp
 // console.log(lis(arr)); // 6
 
 
+
+// *****************************************************
 // EDIT DISTANCE
+// *****************************************************
+
 // Given two strings str1 and str2 and below operations that can performed on str1.
 // Find minimum number of edits (operations) required to convert ‘str1’ into ‘str2’.
 // Insert, Remove, Replace
@@ -115,7 +123,159 @@ var editDistance = function (a,b) { // similar to LCS, also O(ab) for time and s
 
 
 
+// *****************************************************
+// PARTITION INTO TWO SETS WITH MINIMUM DIFFERENCE IN SUM (not done in dp, should retry)
+// *****************************************************
+
+// https://www.geeksforgeeks.org/partition-a-set-into-two-subsets-such-that-the-difference-of-subset-sums-is-minimum/
+// Partition a set into two subsets such that the difference of subset sums is minimum
+// Given a set of integers, the task is to divide it into two sets S1 and S2 such
+// that the absolute difference between their sums is minimum.
+
+var partitionTwoSetsWithMinimumSumDifference = function (arr) { // O(2^n)
+
+  function recurse(idx, sum1, sum2) {
+    if (idx < 0) return { diff: Math.abs(sum1 - sum2), lists: [[], []] };
+
+    var current = arr[idx];
+    var left = recurse(idx - 1, sum1 + current, sum2);
+    var right = recurse(idx - 1, sum1, sum2 + current);
+
+    if (left.diff < right.diff) {
+      left.lists[0].push(current);
+      return left;
+    } else {
+      right.lists[1].push(current);
+      return right;
+    }
+  }
+
+  return recurse(arr.length - 1, 0, 0).lists;
+}
+
+// console.log(partitionTwoSetsWithMinimumSumDifference([1,6,11,5]));
+// console.log(partitionTwoSetsWithMinimumSumDifference([10,20,15,5,25]));
+
+
+// *****************************************************
+// COUNT NUMBER OF WAYS TO COVER A DISTANCE (top down soln here, whats bottom soln?)
+// *****************************************************
+
+// Given a distance n, count total number of ways to cover the
+// distance with 1, 2 and 3 steps.
+//
+// Input:  n = 3
+// Output: 4
+// Below are the four ways
+//  1 step + 1 step + 1 step
+//  1 step + 2 step
+//  2 step + 1 step
+//  3 step
+//
+// Input:  n = 4
+// Output: 7
+
+var waysToCoverDistance = function (n) { // O(nm) n is distance, m is types of a step
+  var hash = {
+    1: 1,
+    2: 2,
+    3: 4
+  };
+
+  function recurse (n) {
+    if (hash[n]) return hash[n];
+    var steps = recurse(n - 1) + recurse(n - 2) + recurse(n - 3);
+    return hash[n] = steps;
+  }
+
+  return recurse(n);
+}
+
+// console.log(waysToCoverDistance(5)) // 7
+
+
+// *****************************************************
+// LONGEST PATH IN A MATRIX - INCREASING BY 1 EACH STEP
+// *****************************************************
+
+// https://www.geeksforgeeks.org/find-the-longest-path-in-a-matrix-with-given-constraints/
+// Given a n*n matrix where all numbers are distinct, find the maximum
+// length path (starting from any cell) such that all cells along the
+// path are in increasing order with a difference of 1.
+//
+// We can move in 4 directions from a given cell (i, j), i.e.,
+// we can move to (i+1, j) or (i, j+1) or (i-1, j) or (i, j-1)
+// with the condition that the adjacent cells have a difference of 1.
+//
+// Input:  mat[][] = {{1, 2, 9}
+//                    {5, 3, 8}
+//                    {4, 6, 7}}
+// Output: 4
+// The longest path is 6-7-8-9.
+
+var longestPathIncreasingByOne = function (m) { // O(mn)
+  var checked = {}; // keeps tracks of ones we seen, and count of chain starting at this position
+
+  function check (i, j) {
+    if (checked[[i,j]]) return checked[[i,j]];
+    var count = 1;
+    // check surrounding recursively, and add the one increasing's count to current count
+    [[i - 1, j], [i + 1, j], [i, j - 1], [i, j + 1]].forEach(function(coor) {
+      if (m[coor[0]] && m[coor[0]][coor[1]]) {
+        var adj = m[coor[0]][coor[1]];
+        if (m[i][j] + 1 === adj) {
+          count += check(coor[0], coor[1]);
+        }
+      }
+    });
+
+    return checked[[i,j]] = count;
+  }
+
+  // loop through matrix and record the increasing count for each cell
+  for (var i = 0; i < m.length; i++) {
+    for (var j = 0; j < m[i].length; j++) {
+      check(i, j);
+    }
+  }
+
+  // backtrack and generate the list
+  // find head first
+  var maxCount = 0, head;
+  for (var i = 0; i < m.length; i++) {
+    for (var j = 0; j < m[i].length; j++) {
+      if (checked[[i,j]] > maxCount) {
+        maxCount = checked[[i,j]];
+        head = [i,j];
+      }
+    }
+  }
+  var list = [];
+  function backtrack(i,j) {
+    list.push(m[i][j]);
+    [[i - 1, j], [i + 1, j], [i, j - 1], [i, j + 1]].forEach(function(coor) {
+      var adj = checked[[coor[0], coor[1]]];
+      if (adj !== undefined && m[coor[0]][coor[1]] === m[i][j] + 1) {
+        backtrack(coor[0], coor[1]);
+      }
+    });
+  };
+  backtrack(head[0], head[1]);
+
+  return list;
+};
+
+// console.log(longestPathIncreasingByOne([
+//   [1,2,9],
+//   [5,3,8],
+//   [4,6,7]
+// ]))
+
+
+// *****************************************************
 // STACKING BOXES
+// *****************************************************
+
 // stacking boxes, given n types of boxes, stack them as high as possible
 // each type can be used more than once
 // 15 by
