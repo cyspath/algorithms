@@ -1,4 +1,31 @@
 // *****************************************************
+// WAYS TO NAVIGATE TO BOTTOM RIGHT
+// *****************************************************
+
+// The problem is to count all the possible paths from top left to bottom right of a mXn matrix with the constraints 
+// that from each cell you can either move only to right or down
+
+var numberPathsFromTopLeftToBottomRight = function (r,c) { // O(rc)
+	var hash = {};
+
+	function recurse(r,c) {
+		if (hash[[r,c]]) return hash[[r,c]];
+
+		if (r < 1 || c < 1) return hash[[r,c]] = 0;
+
+		if (r === 1 && c === 1) return hash[[r,c]] = 1;
+
+		var ways = recurse(r - 1, c) + recurse(r, c - 1);
+		return hash[[r,c]] = ways;
+	}
+
+	return recurse(r,c);
+}
+
+// console.log(numberPathsFromTopLeftToBottomRight(2, 3)) // 3
+// console.log(numberPathsFromTopLeftToBottomRight(3, 3)) // 6
+
+// *****************************************************
 // LONGEST COMMON SUB-SEQUENCE
 // *****************************************************
 
