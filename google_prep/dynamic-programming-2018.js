@@ -273,6 +273,45 @@ var longestPathIncreasingByOne = function (m) { // O(mn)
 
 
 // *****************************************************
+// SUBSET WITH A GIVEN SUM
+// *****************************************************
+//
+// Given a set of non-negative integers, and a value sum,
+// determine if there is a subset of the given set with sum equal to given sum.
+//
+// Examples: set[] = {3, 34, 4, 12, 5, 2}, sum = 9
+// Output:  True  //There is a subset (4, 5) with sum 9.
+
+
+var subsetWithGivenSum = function (arr, target) {
+  var found = false;
+
+  function recurse (arr, target) {
+    if (found) return;
+
+    if (target < 0) return;
+
+    if (target === 0) {
+      found = true;
+      return [];
+    }
+
+    for (var i = 0; i < arr.length; i++) {
+      var child = recurse(arr.slice(0, i), target - arr[i]);
+      if (child) {
+        child.push(arr[i]);
+        return child;
+      }
+    }
+
+  }
+
+  return recurse(arr, target);
+};
+
+console.log(subsetWithGivenSum([3,34,4,12,5,2], 9));
+
+// *****************************************************
 // STACKING BOXES
 // *****************************************************
 
