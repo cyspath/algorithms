@@ -299,6 +299,45 @@ var longestPathIncreasingByOne = function (m) { // O(mn)
 // ]))
 
 
+
+// *****************************************************
+// OPTIMAL STRATEGY FOR A GAME
+// *****************************************************
+// 
+// Problem statement: Consider a row of n coins of values v1 . . . vn, where n is even. We play a game against an opponent by 
+// alternating turns. In each turn, a player selects either the first or last coin from the row, removes it from the row permanently, 
+// and receives the value of the coin. Determine the maximum possible amount of money we can definitely win if we move first.
+
+// Note: The opponent is as clever as the user.
+
+// Let us understand the problem with few examples:
+
+//     5, 3, 7, 10 : The user collects maximum value as 15(10 + 5)
+
+//     8, 15, 3, 7 : The user collects maximum value as 22(7 + 15)
+
+// Does choosing the best at each move give an optimal solution? no...
+
+var optimalCoinPicking = function (coins) { // O(n^2)
+	var hash = {};
+	function recurse (i, j) {
+		if (hash[[i,j]]) return hash[[i,j]];
+
+		if (i + 1 === j) return hash[[i,j]] = Math.max(coins[i], coins[j]);
+
+		// I want max score right now between: which is either first + min of my next 2 choices after choosing first, 
+		// or last + min of my next 2 choices after choosing last
+		return hash[[i,j]] = Math.max(
+			coins[i] + Math.min(recurse(i + 2, j), recurse(i + 1, j - 1)),
+			coins[j] + Math.min(recurse(i + 1, j - 1), recurse(i, j - 2))
+		)
+	}
+
+	return recurse(0,coins.length - 1, true);
+}
+
+console.log(optimalCoinPicking([8,15,3,7]));
+
 // *****************************************************
 // STACKING BOXES
 // *****************************************************
