@@ -1,4 +1,31 @@
 // *****************************************************
+// WAYS TO NAVIGATE TO BOTTOM RIGHT
+// *****************************************************
+
+// The problem is to count all the possible paths from top left to bottom right of a mXn matrix with the constraints 
+// that from each cell you can either move only to right or down
+
+var numberPathsFromTopLeftToBottomRight = function (r,c) { // O(rc)
+	var hash = {};
+
+	function recurse(r,c) {
+		if (hash[[r,c]]) return hash[[r,c]];
+
+		if (r < 1 || c < 1) return hash[[r,c]] = 0;
+
+		if (r === 1 && c === 1) return hash[[r,c]] = 1;
+
+		var ways = recurse(r - 1, c) + recurse(r, c - 1);
+		return hash[[r,c]] = ways;
+	}
+
+	return recurse(r,c);
+}
+
+// console.log(numberPathsFromTopLeftToBottomRight(2, 3)) // 3
+// console.log(numberPathsFromTopLeftToBottomRight(3, 3)) // 6
+
+// *****************************************************
 // LONGEST COMMON SUB-SEQUENCE
 // *****************************************************
 
@@ -271,6 +298,45 @@ var longestPathIncreasingByOne = function (m) { // O(mn)
 //   [4,6,7]
 // ]))
 
+
+
+// *****************************************************
+// OPTIMAL STRATEGY FOR A GAME
+// *****************************************************
+// 
+// Problem statement: Consider a row of n coins of values v1 . . . vn, where n is even. We play a game against an opponent by 
+// alternating turns. In each turn, a player selects either the first or last coin from the row, removes it from the row permanently, 
+// and receives the value of the coin. Determine the maximum possible amount of money we can definitely win if we move first.
+
+// Note: The opponent is as clever as the user.
+
+// Let us understand the problem with few examples:
+
+//     5, 3, 7, 10 : The user collects maximum value as 15(10 + 5)
+
+//     8, 15, 3, 7 : The user collects maximum value as 22(7 + 15)
+
+// Does choosing the best at each move give an optimal solution? no...
+
+var optimalCoinPicking = function (coins) { // O(n^2)
+	var hash = {};
+	function recurse (i, j) {
+		if (hash[[i,j]]) return hash[[i,j]];
+
+		if (i + 1 === j) return hash[[i,j]] = Math.max(coins[i], coins[j]);
+
+		// I want max score right now between: which is either first + min of my next 2 choices after choosing first, 
+		// or last + min of my next 2 choices after choosing last
+		return hash[[i,j]] = Math.max(
+			coins[i] + Math.min(recurse(i + 2, j), recurse(i + 1, j - 1)),
+			coins[j] + Math.min(recurse(i + 1, j - 1), recurse(i, j - 2))
+		)
+	}
+
+	return recurse(0,coins.length - 1, true);
+}
+
+console.log(optimalCoinPicking([8,15,3,7]));
 
 // *****************************************************
 // SUBSET WITH A GIVEN SUM
