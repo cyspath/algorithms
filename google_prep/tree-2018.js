@@ -428,6 +428,159 @@ var lcsBst = function(root, n1, n2) {
 
 
 
+// *****************************************************
+// FIRST TREE IS SUBTREE OF SECOND
+// *****************************************************
+//
+// Given two binary trees, check if the first tree is subtree of the second one.
+// A subtree of a tree T is a tree S consisting of a node in T and all of its
+// descendants in T.
+//
+// The subtree corresponding to the root node is the entire tree; the subtree
+// corresponding to any other node is called a proper subtree.
+//
+// not sub tree
+//       x
+//     /    \
+//   a       b
+//   /
+// c
+//         x
+//       /    \
+//     a       b
+//   /         \
+// c            d
+//
+//
+// is sub tree
+//         x
+//       /    \
+//     a       b
+//      \
+//       c
+//             z
+//           /   \
+//         x      e
+//       /    \     \
+//     a       b      k
+//      \
+//       c
+
+
+var areTreesEqual = function(n1, n2) {
+  if (n1 === undefined && n2 === undefined) return true;
+  if (n1 === undefined || n2 === undefined) return false;
+  if (n1.val !== n2.val) return false;
+
+  return areTreesEqual(n1.left, n2.left) && areTreesEqual(n1.right, n2.right);
+}
+
+var isSubtree = function(root1, root2) { // O(n*(number of matching root nodes - usually just 1))
+  var candidates = [];
+  function findCandidates(n2) {
+    if (!n2) return;
+    if (n2.val === root1.val) candidates.push(n2);
+    findCandidates(n2.left);
+    findCandidates(n2.right);
+  }
+  findCandidates(root2);
+
+  for (var i = 0; i < candidates.length; i++) {
+    var node = candidates[i];
+    var result = areTreesEqual(root1, node);
+    if (result === true) return true;
+  }
+
+  return false;
+}
+
+// console.log(isSubtree({
+//   val: 'x', left: { val: 'a', left: { val: 'c' } }, right: { val: 'b' }
+// },{
+//   val: 'x', left: { val: 'a', left: { val: 'c' } }, right: { val: 'b', right: { val: 'd' } }
+// }));
+//
+// console.log(isSubtree({
+//   val: 'x', left: { val: 'a', right: { val: 'c' } }, right: { val: 'b' }
+// },{
+//   val: 'x', left: {
+//     val: 'x', left: { val: 'a', right: { val: 'c' } }, right: { val: 'b' }
+//   }, right: {
+//     val: 'e', right: { val: 'k' }
+//   }
+// }));
+
+
+
+// *****************************************************
+// REVERSE ALTERNATE LEVEL NODES OF PERFECT BT
+// *****************************************************
+//
+// Given a Perfect Binary Tree, reverse the alternate level nodes of the
+// binary tree.
+//
+// Given tree:
+//                a
+//             /     \
+//            b       c
+//          /  \     /  \
+//         d    e    f    g
+//        / \  / \  / \  / \
+//        h  i j  k l  m  n  o
+//
+// Modified tree:
+//   	            a
+//             /     \
+//            c       b
+//          /  \     /  \
+//         d    e    f    g
+//        / \  / \  / \  / \
+//       o  n m  l k  j  i  h
+
+var reverseAlternateLevelNodes = function(root) {
+  var parents = [root];
+  var children = [];
+
+  var arr = [];
+
+  var reverse = false;
+
+  while (parents.length > 0) {
+    arr.push(reverse ? parents.slice().reverse() : parents);
+    for (var i = 0; i < parents.length; i++) {
+      var p = parents[i];
+      if (p.left) children.push(p.left);
+      if (p.right) children.push(p.right);
+    }
+
+    parents = children;
+    children = [];
+
+    reverse = !reverse;
+  }
+
+  // console.log(arr.map(function(e) { return e.map(function(el) { return el.val })}));
+
+  for (var i = 0; i < arr.length - 1; i++) {
+    var row = arr[i];
+    for (var j = 0; j < row.length; j++) {
+      row[j].left = arr[i + 1][j*2];
+      row[j].right = arr[i + 1][j*2 + 1];
+    }
+  }
+
+  return root;
+
+}
+
+// console.log(reverseAlternateLevelNodes({ val: 'a', left: {
+//   val: 'b', left: { val: 'd' , left: { val: 'h'}, right: { val: 'i'} }, right: { val: 'e', left: { val: 'j'}, right: { val: 'k'}}
+// }, right: {
+//   val: 'c', left: { val: 'f' , left: { val: 'l'}, right: { val: 'm'} }, right: { val: 'g', left: { val: 'n'}, right: { val: 'o'}}
+// }}));
+//
+
+
 
 
 
