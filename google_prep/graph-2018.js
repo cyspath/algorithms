@@ -132,3 +132,81 @@ var commutableIslands = function(n, m) {
 // [4,3,2],
 // [1,3,10]
 // ])); // 6
+
+
+
+// *****************************************************
+// BOGGLE - FIND ALL POSSIBLE WORDS IN A BOARD
+// *****************************************************
+//
+// Given a dictionary, a method to do lookup in dictionary and a M x N board where
+// every cell has one character. Find all possible words that can be formed by a
+// sequence of adjacent characters. Note that we can move to any of 8 adjacent
+// characters, but a word should not have multiple instances of same cell.
+//
+// Example:
+//
+// Input: dictionary[] = {"GEEKS", "FOR", "QUIZ", "GO"};
+//        boggle[][]   = {{'G','I','Z'},
+//                        {'U','E','K'},
+//                        {'Q','S','E'}};
+//       isWord(str): returns true if str is present in dictionary
+//                    else false.
+//
+// Output:  Following words of dictionary are present
+//          GEEKS
+//          QUIZ
+
+function checkWordInBoggle(word, boggle) {
+
+  for (var i = 0; i < boggle.length; i++) {
+    for (var j = 0; j < boggle[i].length; j++) {
+
+      if (hasLetter(word, 0, boggle, i, j, {})) return true;
+
+    }
+  }
+
+  return false;
+
+  function hasLetter(word, idx, boggle, row, col, visited) {
+
+    if (visited[[row,col]]) return false;
+    visited[[row,col]] = true;
+
+    if (idx >= word.length) return true;
+    if (row >= boggle.length || row < 0 || col >= boggle[0].length || col < 0) return false;
+    if (word[idx] !== boggle[row][col]) return false;
+
+    var directions = [[row-1,col],[row-1,col+1],[row,col+1],[row+1,col+1],[row+1,col],[row+1,col-1],[row,col-1],[row-1,col-1]];
+
+    for (var i = 0; i < directions.length; i++) {
+      var d = directions[i];
+
+      var newVisited = {};
+      for (var k in visited) newVisited[k] = true;
+
+      if (hasLetter(word, idx + 1, boggle, d[0], d[1], newVisited) === true) return true;
+    }
+
+    return false;
+  }
+
+}
+
+var boggle = function(words, boggle) {
+  var inBoggle = [];
+  for (var i = 0; i < words.length; i++) {
+    if (checkWordInBoggle(words[i], boggle) === true) {
+      inBoggle.push(words[i]);
+    }
+  }
+  return inBoggle;
+}
+// 
+// console.log(boggle(
+//   ["GEEKS", "FOR", "QUIZ", "GO"],
+//   [ ['G','I','Z'],
+//     ['U','E','K'],
+//     ['Q','S','E'] ]
+// ));
