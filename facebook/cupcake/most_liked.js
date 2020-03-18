@@ -1,8 +1,6 @@
 // You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
-
 // Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight without alerting the police.
 // thought process, current is cross dp, current = Max(current + 2 above, 1 above), which means use max 2 ago and current vs not use current
-
 var rob = function(nums) {
     var grid = Array(nums.length).fill().map(function(el) {
         return Array(nums.length);
@@ -25,8 +23,6 @@ var rob = function(nums) {
         }
     }
 
-    // console.log(grid)
-
     var max = 0;
     for (var r = 0; r < nums.length; r++) {
         for (var c = 0; c < nums.length; c++) {
@@ -35,8 +31,7 @@ var rob = function(nums) {
     }
     return max;
 };
-
-rob([1,2,3,1])
+// rob([1,2,3,1])
 
 var isValid = function(s) {
     var stack = [], targetHash = { ')': '(', ']': '[', '}': '{'};
